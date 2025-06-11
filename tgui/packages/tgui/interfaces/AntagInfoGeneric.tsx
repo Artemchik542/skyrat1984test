@@ -2,7 +2,6 @@ import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {

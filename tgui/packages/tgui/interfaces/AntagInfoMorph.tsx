@@ -1,7 +1,6 @@
 import { BlockQuote, Stack } from 'tgui-core/components';
 
 import { Window } from '../layouts';
-//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 
 const goodstyle = {
   color: 'lightgreen',

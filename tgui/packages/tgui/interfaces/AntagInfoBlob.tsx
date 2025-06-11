@@ -9,7 +9,6 @@ import {
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import { Objective } from './common/Objectives';
 
 type Data = {

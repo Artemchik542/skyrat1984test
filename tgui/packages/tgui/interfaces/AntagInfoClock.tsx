@@ -3,7 +3,6 @@ import { Icon, Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-//import { Rules } from './AntagInfoRules';
 
 type Info = {
   antag_name: string;
