@@ -1,0 +1,14 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><base href="../../../../../"><link rel="stylesheet" href="dmdoc.css"><title>modular_ss220/modules/reboot_callbacks/code/game/callback_procs.dm - byond</title></head><body><header><a href="index.html">byond</a> - <a href="index.html#modules">Modules</a> - <a href="index.html#types">Types</a></header><main><h1>modular_ss220/modules/reboot_callbacks/code/game/callback_procs.dm <a href="https://github.com/Artemchik542/skyrat1984test/blob/8f7c7103471a41e8e59a8172c2c30419ea7422e6/modular_ss220/modules/reboot_callbacks/code/game/callback_procs.dm"><img src="git.png" width="16" height="16" title="modular_ss220/modules/reboot_callbacks/code/game/callback_procs.dm"></a></h1><table class="summary" cellspacing="0"><tr><th>/proc/<a href="global.html#proc/TryAutoHardReboot">TryAutoHardReboot</a></th><td>EXAMPLE for bash script to handle signals:
+handle_hard_reboot_sigusr1() {
+echo &quot;Received SIGUSR1 signal! Process ID: $$&quot;
+pkill DreamDaemon
+}
+echo $$ &gt; /tmp/dreamdaemon.pid
+trap 'handle_hard_reboot_sigusr1' SIGUSR1
+... and after that, while loop for DreamDaemon goes... (or whatever you use)
+example: DreamDaemon tgstation.dmb 25575 -trusted &amp;
+wait
+THIS WILL NOT WORK UNTIL YOU SET UP EVERYTHING, YOU ALSO CAN COMPLETLY IGNORE IT WITHOUT ANY TROUBLE
+THE ACTUAL TROUBLE WILL BE IN CASE IT'S ACTUALLY SET UP, BUT THE WRONG WAY
+By some observations, players not always can connect without hard reboot the hosting service
+This is intended to send SIGUSR1 signal which should be captured (by 'trap' likely) and restart DreamMaker</td></tr></table></main><footer>tgstation.dme <a href="https://github.com/Artemchik542/skyrat1984test/tree/8f7c7103471a41e8e59a8172c2c30419ea7422e6">8f7c710</a> (master) — <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.10.0</a></footer></body></html>
