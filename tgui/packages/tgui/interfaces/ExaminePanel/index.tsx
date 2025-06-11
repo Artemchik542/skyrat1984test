@@ -47,11 +47,11 @@ export function ExaminePanel(props) {
     custom_species_lore,
     headshot,
     veteran_status,
-    // SS1984 REMOVAL START
-    // ideal_antag_optin_status,
-    // current_antag_optin_status,
-    // opt_in_colors,
-    // SS1984 REMOVAL END
+    /* SS1984 REMOVAL START */
+    /* ideal_antag_optin_status, */
+    /* current_antag_optin_status, */
+    /* opt_in_colors, */
+    /* SS1984 REMOVAL END */
   } = data;
   const [oocNotesIndex, setOocNotesIndex] = useState('SFW');
   const [flavorTextIndex, setFlavorTextIndex] = useState('SFW');

@@ -11,7 +11,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import {
   Objective,
   ObjectivePrintout,
@@ -80,11 +80,6 @@ export const AntagInfoChangeling = (props) => {
           <Stack.Item maxHeight={16}>
             <IntroductionSection />
           </Stack.Item>
-          {/* NOVA EDIT ADDITION START */}
-          <Stack.Item>
-            <Rules />
-          </Stack.Item>
-          {/* NOVA EDIT ADDITION END */}
           <Stack.Item grow={4}>
             <AbilitiesSection />
           </Stack.Item>

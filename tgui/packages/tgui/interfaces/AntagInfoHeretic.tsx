@@ -12,7 +12,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import {
   Objective,
   ObjectivePrintout,
@@ -91,11 +91,6 @@ const IntroductionSection = (props) => {
           <Stack vertical>
             <FlavorSection />
             <Stack.Divider />
-            {/* NOVA EDIT ADDITION START */}
-            <Stack.Item>
-              <Rules />
-            </Stack.Item>
-            {/* NOVA EDIT ADDITION END */}
             <Stack.Divider />
             <GuideSection />
             <Stack.Divider />

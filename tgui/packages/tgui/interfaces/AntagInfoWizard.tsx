@@ -3,7 +3,7 @@ import { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 import {
   Objective,
   ObjectivePrintout,
@@ -85,11 +85,6 @@ export const AntagInfoWizard = (props) => {
                 <Stack.Item>
                   <RitualPrintout ritual={ritual} />
                 </Stack.Item>
-                {/* NOVA EDIT ADDITION START */}
-                <Stack.Item>
-                  <Rules />
-                </Stack.Item>
-                {/* NOVA EDIT ADDITION END */}
               </Stack>
             </Section>
           </Stack.Item>

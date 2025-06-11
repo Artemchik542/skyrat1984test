@@ -1,7 +1,7 @@
 import { BlockQuote, LabeledList, Section, Stack } from 'tgui-core/components';
 
 import { Window } from '../layouts';
-import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
+//import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
 
 const tipstyle = {
   color: 'white',
@@ -71,11 +71,6 @@ export const AntagInfoNightmare = (props) => {
               </LabeledList>
             </Section>
           </Stack.Item>
-          {/* NOVA EDIT ADDITION START */}
-          <Stack.Item>
-            <Rules />
-          </Stack.Item>
-          {/* NOVA EDIT ADDITION END */}
         </Stack>
       </Window.Content>
     </Window>
