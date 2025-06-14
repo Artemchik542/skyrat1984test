@@ -33,7 +33,7 @@ export function LoadoutPage(props) {
   const loadout_tabs = serverData?.loadout.loadout_tabs || [];
   /* NOVA EDIT CHANGE - Original: const { data } = useBackend<LoadoutManagerData>();
   const { erp_pref } = data; */
-  const erp_pref = useBackend<LoadoutManagerData>().data.erp_pref;// SS1984 EDIT (нам это не потребуется)
+  /* const erp_pref = useBackend<LoadoutManagerData>().data.erp_pref;// SS1984 EDIT (нам это не потребуется) */
 
   const [searchLoadout, setSearchLoadout] = useState('');
   const [selectedTabName, setSelectedTab] = useState(

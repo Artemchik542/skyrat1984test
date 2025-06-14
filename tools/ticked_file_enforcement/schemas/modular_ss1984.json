@@ -3,7 +3,8 @@
 	"scannable_directory": "modular_ss220/",
 	"subdirectories": true,
 	"excluded_files": [
-		"modular_nova/modules/verbs/code/subtle.dm"
+		"modular_nova/modules/verbs/code/subtle.dm",
+		"code\__DEFINES\~nova_defines\antag_optin_defines.dm",
 	],
 	"forbidden_includes": []
 }

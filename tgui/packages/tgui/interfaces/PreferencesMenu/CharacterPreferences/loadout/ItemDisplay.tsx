@@ -174,7 +174,7 @@ type TabProps = {
 // NOVA EDIT ADDITION START - Expanded loadout framework
 const FilterItemList = (items: LoadoutItem[]) => {
   const { data } = useBackend<LoadoutManagerData>();
-  const { is_donator, is_veteran} = data; // SS1984 EDIT (парамерт erp_pref далее не будет использован)
+  const { is_donator, is_veteran } = data; /* SS1984 EDIT (парамерт erp_pref далее не будет использован) */
   const ckey = data.ckey;
 
   return items.filter((item: LoadoutItem) => {
@@ -217,7 +217,7 @@ type SearchProps = {
 export function SearchDisplay(props: SearchProps) {
   const { loadout_tabs, currentSearch } = props;
   const { data } = useBackend<LoadoutManagerData>(); // NOVA EDIT ADDITION
-  //const { erp_pref } = data; // NOVA EDIT ADDITIO // SS1984 EDIT (далее не используем)
+ //const { erp_pref } = data; // NOVA EDIT ADDITIO // SS1984 EDIT (далее не используем)
 
   const search = createSearch(
     currentSearch,
