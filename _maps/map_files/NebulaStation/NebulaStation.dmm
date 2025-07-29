@@ -62546,7 +62546,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/main)
 "jns" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/effect/turf_decal/bot,
@@ -77715,7 +77715,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/radshelter/civil)
 "lwB" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/effect/turf_decal/bot,
@@ -144912,7 +144912,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/station/security/courtroom)
 "vxq" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/effect/turf_decal/bot,

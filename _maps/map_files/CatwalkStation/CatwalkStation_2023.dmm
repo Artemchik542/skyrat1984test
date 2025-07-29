@@ -17115,7 +17115,7 @@
 /turf/open/floor/iron,
 /area/station/science/zoo)
 "fgs" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/transfer)
@@ -25182,7 +25182,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos/upper)
 "hzC" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/security/execution/transfer)

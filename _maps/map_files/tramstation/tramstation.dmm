@@ -8370,7 +8370,7 @@
 /area/station/hallway/secondary/command)
 "bSU" = (
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /turf/open/floor/iron/dark,
 /area/station/security/execution/transfer)
 "bTm" = (

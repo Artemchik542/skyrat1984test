@@ -29003,7 +29003,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lab)
 "jXM" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -35491,7 +35491,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "mqQ" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},
@@ -57727,7 +57727,7 @@
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "tVm" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 8
 	},

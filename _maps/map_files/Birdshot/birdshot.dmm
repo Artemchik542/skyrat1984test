@@ -10709,7 +10709,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "dSu" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "dSz" = (
@@ -41415,7 +41415,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "nPH" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/item/radio/intercom/directional/west,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)

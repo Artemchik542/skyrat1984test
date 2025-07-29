@@ -476,7 +476,7 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "afQ" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/structure/cable,
@@ -53016,7 +53016,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/service/chapel)
 "ndY" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/machinery/status_display/evac/directional/south,
@@ -88662,7 +88662,7 @@
 /turf/open/floor/carpet/black,
 /area/station/maintenance/port)
 "vRz" = (
-/obj/structure/closet/secure_closet/brig{
+/obj/structure/closet/secure_closet/brig/permanent{
 	name = "Prisoner Locker"
 	},
 /obj/machinery/status_display/ai/directional/south,

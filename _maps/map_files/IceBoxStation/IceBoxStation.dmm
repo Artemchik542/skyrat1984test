@@ -19366,7 +19366,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/security/prison/work)
 "fvO" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
@@ -36824,7 +36824,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/atmos/hfr_room)
 "kyu" = (
-/obj/structure/closet/secure_closet/brig,
+/obj/structure/closet/secure_closet/brig/permanent,
 /turf/open/floor/iron/smooth,
 /area/station/security/execution/transfer)
 "kyy" = (
@@ -76205,6 +76205,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth_half,
 /area/station/maintenance/department/medical/central)
+"vER" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/mineral/ore_redemption/gulag_autolink,
+/turf/open/floor/iron,
+/area/mine/laborcamp)
 "vEU" = (
 /obj/machinery/door/airlock/external{
 	glass = 1;
@@ -118654,7 +118659,7 @@ njJ
 cVD
 njJ
 hpl
-dqx
+vER
 dqx
 vjh
 nTO
