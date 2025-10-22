@@ -110,6 +110,7 @@
 	RegisterSignal(spawned_mob, COMSIG_LIVING_DEATH, PROC_REF(mob_death))
 
 	visible_message(span_danger("[spawned_mob] emerges from [src]."))
+	return spawned_mob // SS1984 ADDITION
 
 /obj/structure/mob_spawner/proc/mob_death(mob/living/dead_guy, gibbed)
 	SIGNAL_HANDLER
@@ -118,7 +119,7 @@
 
 /obj/structure/mob_spawner/attacked_by(obj/item/I, mob/living/user)
 	. = ..()
-	do_jiggle()
+	do_jiggle_nova()
 	if(!retaliated)
 		visible_message(span_danger("[src] grubbles angrily!"))
 		var/chosen_mob_type = pick(monster_types)

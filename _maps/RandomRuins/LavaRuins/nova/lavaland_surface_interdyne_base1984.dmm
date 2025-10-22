@@ -2465,7 +2465,7 @@
 /area/ruin/interdyne_planetary_base/cargo)
 "us" = (
 /obj/structure/table/optable,
-/obj/machinery/defibrillator_mount/directional{
+/obj/machinery/defibrillator_mount/loaded/directional{
 	pixel_y = 26
 	},
 /turf/open/floor/iron/dark/textured_large,
@@ -3431,7 +3431,7 @@
 /area/ruin/interdyne_planetary_base/cargo)
 "CH" = (
 /obj/structure/window/reinforced/survival_pod/spawner/directional/south,
-/obj/machinery/computer/scan_consolenew{
+/obj/machinery/computer/dna_console{
 	dir = 1
 	},
 /obj/effect/turf_decal/tile/dark_green/half,

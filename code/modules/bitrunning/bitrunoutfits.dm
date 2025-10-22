@@ -11,7 +11,7 @@
 	neck = /obj/item/clothing/neck/tie/horrible
 	uniform = /obj/item/clothing/under/rank/security/detective/disco
 	shoes = /obj/item/clothing/shoes/discoshoes
-	suit = /obj/item/clothing/suit/discoblazer
+	suit = /obj/item/clothing/suit/jacket/discoblazer
 	id = /obj/item/card/id/advanced
 	back = /obj/item/storage/backpack
 
@@ -19,7 +19,7 @@
 	name = "Kimball"
 	glasses = /obj/item/clothing/glasses/regular/kim
 	uniform = /obj/item/clothing/under/rank/security/detective/kim
-	shoes = /obj/item/clothing/shoes/kim
+	shoes = /obj/item/clothing/shoes/jackboots/kim
 	suit = /obj/item/clothing/suit/kimjacket
 	id = /obj/item/card/id/advanced
 	back = /obj/item/storage/backpack

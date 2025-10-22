@@ -6,17 +6,16 @@
 
 /datum/armament_entry/company_import/akh_frontier/basic
 	subcategory = "Hand-Held Equipment"
+	cost = PAYCHECK_COMMAND * 4
 
 /datum/armament_entry/company_import/akh_frontier/basic/fock
 	item_type = /obj/item/multitool/fock
-	cost = PAYCHECK_COMMAND * 4
 	contraband = TRUE
 
 /datum/armament_entry/company_import/akh_frontier/basic/doorforcer
 	item_type = /obj/item/crowbar/large/doorforcer
 	cost = PAYCHECK_COMMAND * 6
 	contraband = TRUE
-	restricted = TRUE
 
 /datum/armament_entry/company_import/akh_frontier/basic/omni_drill
 	item_type = /obj/item/screwdriver/omni_drill
@@ -89,7 +88,7 @@
 
 /datum/armament_entry/company_import/akh_frontier/deployables
 	subcategory = "Deployable Power Equipment"
-	cost = PAYCHECK_COMMAND * 2
+	cost = PAYCHECK_COMMAND * 3
 
 /datum/armament_entry/company_import/akh_frontier/deployables/turbine
 	item_type = /obj/item/flatpacked_machine/wind_turbine
@@ -104,5 +103,31 @@
 
 /datum/armament_entry/company_import/akh_frontier/deployables/rtg
 	item_type = /obj/item/flatpacked_machine/rtg
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 7
 	restricted = TRUE
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar
+	item_type = /obj/item/flatpacked_machine/solar
+	cost = PAYCHECK_CREW * 3
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar/titaniumglass
+	item_type = /obj/item/flatpacked_machine/solar/titaniumglass
+	cost = PAYCHECK_COMMAND * 3
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar/plasmaglass
+	item_type = /obj/item/flatpacked_machine/solar/plasmaglass
+	cost = PAYCHECK_COMMAND * 5
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar/plastitaniumglass
+	item_type = /obj/item/flatpacked_machine/solar/plastitaniumglass
+	cost = PAYCHECK_COMMAND * 6
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar_tracker
+	item_type = /obj/item/flatpacked_machine/solar_tracker
+	cost = PAYCHECK_COMMAND
+
+/datum/armament_entry/company_import/akh_frontier/deployables/solar_control
+	name = "Solar Array Console Board"
+	item_type = /obj/item/circuitboard/computer/solar_control
+	description = "The circuit board for the console that controls the solar panel arrays"
+	cost = CARGO_CRATE_VALUE * 2

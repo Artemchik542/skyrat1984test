@@ -21,13 +21,13 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT *2)
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
+	custom_price = PAYCHECK_COMMAND
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
 	var/scanmode = SCANMODE_HEALTH
 	/// Advanced health analyzer
 	var/advanced = FALSE
-	custom_price = PAYCHECK_COMMAND
 	/// If this analyzer will give a bonus to wound treatments apon woundscan.
 	var/give_wound_treatment_bonus = FALSE
 	var/last_scan_text
@@ -99,13 +99,22 @@
 	switch (scanmode)
 		if (SCANMODE_HEALTH)
 			last_scan_text = healthscan(user, M, mode, advanced, tochat = readability_check)
+			// SS1984 ADDITION START
+			last_scan_title = "Analyzing results for <b>[M]</b>"
+			if(readability_check)
+				show_results(user)
+			// SS1984 ADDITION END
 			if((M.health / M.maxHealth) > CLEAN_BILL_OF_HEALTH_RATIO)
 				last_healthy_scanned = WEAKREF(M)
 			else
 				last_healthy_scanned = null
 		if (SCANMODE_WOUND)
 			if(readability_check)
-				woundscan(user, M, src)
+				last_scan_text = woundscan(user, M, src) // SS1984 EDIT, original: woundscan(user, M, src)
+				// SS1984 ADDITION START
+				last_scan_title = "Wound analyze results for <b>[M]</b>"
+				show_results(user)
+				// SS1984 ADDITION END
 
 	add_fingerprint(user)
 
@@ -178,7 +187,7 @@
 			if(HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN))
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("severe burns", "Tend burns and apply a de-husking agent, such as [/datum/reagent/medicine/c2/synthflesh::name].", tochat)].</span><br>"
 			else if (HAS_TRAIT_FROM(target, TRAIT_HUSK, CHANGELING_DRAIN))
-				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Perform blood transfusion and apply a de-husking agent such as [/datum/reagent/medicine/c2/synthflesh::name]. Full restoration will require more than usual.", tochat)].</span><br>" // NOVA EDIT - CHANGE. ORIGINAL: render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
 			else
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
 
@@ -190,7 +199,17 @@
 			render_list += "<span class='alert ml-1'>Fatigue level: [target.getStaminaLoss()]%.</span><br>"
 		else
 			render_list += "<span class='alert ml-1'>Subject appears to be suffering from fatigue.</span><br>"
-	if (!target.get_organ_slot(ORGAN_SLOT_BRAIN)) // kept exclusively for soul purposes
+
+	// Check for brain - both organic (carbon) and synthetic (cyborg MMI)
+	var/has_brain = FALSE
+	if(target.get_organ_slot(ORGAN_SLOT_BRAIN))
+		has_brain = TRUE
+	else if(iscyborg(target))
+		var/mob/living/silicon/robot/cyborg_target = target
+		if(cyborg_target.mmi?.brain)
+			has_brain = TRUE
+
+	if(!has_brain) // kept exclusively for soul purposes
 		render_list += "<span class='alert ml-1'>Subject lacks a brain.</span><br>"
 
 	if(iscarbon(target))
@@ -293,24 +312,7 @@
 			<td style='width:30em;'><font color='#ff0000'><b>Status</b></font></td>\
 			</tr>"
 
-		var/list/missing_organs = list()
-		if(!humantarget.get_organ_slot(ORGAN_SLOT_BRAIN))
-			missing_organs[ORGAN_SLOT_BRAIN] = "Brain"
-		if(humantarget.needs_heart() && !humantarget.get_organ_slot(ORGAN_SLOT_HEART))
-			missing_organs[ORGAN_SLOT_HEART] = "Heart"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOBREATH, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantlungs) && !humantarget.get_organ_slot(ORGAN_SLOT_LUNGS))
-			missing_organs[ORGAN_SLOT_LUNGS] = "Lungs"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_LIVERLESS_METABOLISM, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantliver) && !humantarget.get_organ_slot(ORGAN_SLOT_LIVER))
-			missing_organs[ORGAN_SLOT_LIVER] = "Liver"
-		if(!HAS_TRAIT_FROM(humantarget, TRAIT_NOHUNGER, SPECIES_TRAIT) && !isnull(humantarget.dna.species.mutantstomach) && !humantarget.get_organ_slot(ORGAN_SLOT_STOMACH))
-			missing_organs[ORGAN_SLOT_STOMACH] ="Stomach"
-		if(!isnull(humantarget.dna.species.mutanttongue) && !humantarget.get_organ_slot(ORGAN_SLOT_TONGUE))
-			missing_organs[ORGAN_SLOT_TONGUE] = "Tongue"
-		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EARS))
-			missing_organs[ORGAN_SLOT_EARS] = "Ears"
-		if(!isnull(humantarget.dna.species.mutantears) && !humantarget.get_organ_slot(ORGAN_SLOT_EYES))
-			missing_organs[ORGAN_SLOT_EYES] = "Eyes"
-
+		var/list/missing_organs = humantarget.get_missing_organs()
 		// Follow same order as in the organ_process_order so it's consistent across all humans
 		for(var/sorted_slot in GLOB.organ_process_order)
 			var/obj/item/organ/organ = humantarget.get_organ_slot(sorted_slot)
@@ -452,6 +454,31 @@
 				var/datum/brain_trauma/severe/death_consequences/consequences_trauma = trauma
 				render_list += consequences_trauma.get_health_analyzer_link_text(user)
 	// NOVA EDIT ADDITION END
+
+
+	// Lungs
+	var/obj/item/organ/lungs/lungs = target.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (lungs)
+		var/initial_pressure_mult = lungs::received_pressure_mult
+		if (lungs.received_pressure_mult != initial_pressure_mult)
+			var/tooltip
+			var/dilation_text
+			var/beginning_text = "Lung Dilation: "
+			if (lungs.received_pressure_mult > initial_pressure_mult) // higher than usual
+				beginning_text = span_blue("<b>[beginning_text]</b>")
+				dilation_text = span_blue("[(lungs.received_pressure_mult * 100) - 100]%")
+				tooltip = "Subject's lungs are dilated and breathing more air than usual. Increases the effectiveness of healium and other gases."
+			else
+				beginning_text = span_danger("<b>[beginning_text]</b>")
+				if (lungs.received_pressure_mult <= 0) // lethal
+					dilation_text = span_bolddanger("[lungs.received_pressure_mult * 100]%")
+					tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. Otherwise, replace lungs."
+				else
+					dilation_text = span_danger("[lungs.received_pressure_mult * 100]%")
+					tooltip = "Subject's lungs are partially shut. If unable to breathe, administer a high-pressure internals tank or replace lungs. If asthmatic, inhaled albuterol or bypass surgery will likely help."
+
+			var/lung_message = beginning_text + conditional_tooltip(dilation_text, tooltip, TRUE)
+			render_list += lung_message
 
 	// Time of death
 	if(target.station_timestamp_timeofdeath && !target.appears_alive())
@@ -656,13 +683,16 @@
 			playsound(simple_scanner, 'sound/machines/ping.ogg', 50, FALSE)
 			to_chat(user, span_notice("\The [simple_scanner] makes a happy ping and briefly displays a smiley face with several exclamation points! It's really excited to report that [patient] has no wounds!"))
 			simple_scanner.show_emotion(AID_EMOTION_HAPPY)
-		to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
+		var/to_return_msg = "<span class='notice ml-1'>No wounds detected in subject.</span>" // SS1984 ADDITION
+		to_chat(user, to_return_msg) // SS1984 EDIT, original: to_chat(user, "<span class='notice ml-1'>No wounds detected in subject.</span>")
+		return to_return_msg // SS1984 ADDITION
 	else
 		to_chat(user, custom_boxed_message("blue_box", jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
 		if(simple_scan)
 			var/obj/item/healthanalyzer/simple/simple_scanner = scanner
 			simple_scanner.show_emotion(AID_EMOTION_WARN)
 			playsound(simple_scanner, 'sound/machines/beep/twobeep.ogg', 50, FALSE)
+		return render_list // SS1984 ADDITION
 
 
 /obj/item/healthanalyzer/simple

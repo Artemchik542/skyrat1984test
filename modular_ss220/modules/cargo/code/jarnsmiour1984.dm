@@ -27,7 +27,13 @@
 	restricted = TRUE
 	cost = PAYCHECK_COMMAND * 10
 
-/datum/armament_entry/company_import/blacksteel/blade/combat_knide
+/datum/armament_entry/company_import/blacksteel/blade/switchblade
+	item_type = /obj/item/switchblade
+	contraband = TRUE
+	restricted = TRUE
+	cost = PAYCHECK_COMMAND * 14
+
+/datum/armament_entry/company_import/blacksteel/blade/combat_knife
 	item_type = /obj/item/knife/combat
 	contraband = TRUE
 	restricted = TRUE
@@ -40,7 +46,7 @@
 	cost = PAYCHECK_COMMAND * 25
 
 /datum/armament_entry/company_import/blacksteel/blade/shamshir_sabre
-	item_type = /obj/item/storage/belt/sabre/cargo
+	item_type = /obj/item/storage/belt/sheath/sabre/cargo
 	restricted = TRUE
 	cost = PAYCHECK_COMMAND * 18
 
@@ -60,6 +66,7 @@
 
 /datum/armament_entry/company_import/blacksteel/equipment
 	subcategory = "Medieval Equipment"
+	cost = PAYCHECK_COMMAND * 3
 
 /datum/armament_entry/company_import/blacksteel/equipment/belt
 	item_type = /obj/item/storage/belt/crusader
@@ -67,7 +74,6 @@
 
 /datum/armament_entry/company_import/blacksteel/equipment/cuirass
 	item_type = /obj/item/clothing/suit/armor/vest/cuirass
-	cost = PAYCHECK_COMMAND * 3
 
 /datum/armament_entry/company_import/blacksteel/equipment/quiver
 	item_type = /obj/item/storage/bag/quiver/full

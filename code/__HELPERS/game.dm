@@ -150,8 +150,8 @@
 	return
 
 ///Get active players who are playing in the round
-/proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
-	var/active_players = 0
+/proc/get_active_player_list(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
+	var/list/active_players = list()
 	for(var/mob/player_mob as anything in GLOB.player_list)
 		if(!player_mob?.client)
 			continue
@@ -167,8 +167,14 @@
 			var/mob/dead/observer/ghost_player = player_mob
 			if(ghost_player.started_as_observer) // Exclude people who started as observers
 				continue
-		active_players++
+		if (alive_check && SSdynamic && !SSdynamic.is_mob_considered_as_valid(player_mob, player_mob.client, allow_ghost = FALSE)) // SS1984 ADDITION
+			continue // SS1984 ADDITION
+		active_players += player_mob
 	return active_players
+
+///Counts active players who are playing in the round
+/proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
+	return length(get_active_player_list(alive_check, afk_check, human_check))
 
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
@@ -241,6 +247,10 @@
 		var/area/player_area = get_area(character)
 		deadchat_broadcast(span_game(" has arrived at the station at [span_name(player_area.name)]."), span_game("[span_name(character.real_name)] ([rank])"), follow_target = character, message_type=DEADCHAT_ARRIVALRATTLE)
 	if(character.mind && (character.mind.assigned_role.job_flags & JOB_ANNOUNCE_ARRIVAL))
+		// SS1984 ADDITION START
+		if (try_show_cryomessage_for_spawn(character, rank))
+			return
+		// SS1984 ADDITION END
 		aas_config_announce(/datum/aas_config_entry/arrival, list("PERSON" = character.real_name,"RANK" = rank))
 
 ///Check if the turf pressure allows specialized equipment to work

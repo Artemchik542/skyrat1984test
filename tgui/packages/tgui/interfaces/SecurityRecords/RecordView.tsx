@@ -17,7 +17,7 @@ import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
 import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
 import { RecordPrint } from './RecordPrint';
-import { SecurityRecordsData } from './types';
+import type { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
 export const SecurityRecordView = (props) => {
@@ -121,7 +121,7 @@ const RecordInfo = (props) => {
                 return (
                   <Button
                     color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
-                    disabled={button === 'Arrest' && !hasValidCrimes}
+                    // SS1984 REMOVAL disabled={button === 'Arrest' && !hasValidCrimes}
                     icon={isSelected ? 'check' : ''}
                     key={index}
                     onClick={() =>

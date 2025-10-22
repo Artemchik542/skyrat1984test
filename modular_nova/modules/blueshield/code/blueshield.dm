@@ -40,7 +40,7 @@
 	)
 
 	nova_stars_only = FALSE // SS1984 EDIT
-	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED
 
 /datum/outfit/job/blueshield
 	name = "Blueshield"
@@ -62,7 +62,6 @@
 	belt = /obj/item/modular_computer/pda/blueshield
 	l_pocket = /obj/item/sensor_device/blueshield
 	backpack_contents = list(
-							/obj/item/storage/medkit/tactical/blueshield,
 							/obj/item/choice_beacon/blueshield = 1,
 	)
 
@@ -90,13 +89,14 @@
 /// Blueshield's Custom Hellfire
 /obj/item/ammo_casing/energy/laser/hellfire/blueshield
 	projectile_type = /obj/projectile/beam/laser/hellfire
-	e_cost = LASER_SHOTS(13, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(25, STANDARD_CELL_CHARGE)
 	select_name = "maim"
 
 /obj/item/gun/energy/laser/hellgun/blueshield
-	name ="modified hellfire laser gun"
-	desc = "A lightly overtuned version of NT's Hellfire Laser rifle, scratches showing its age and the fact it has definitely been owned before. This one is more energy efficient without sacrificing damage."
-	icon_state = "hellgun"
+	name = "streamlined hellfire laser carbine"
+	icon = 'modular_nova/modules/modular_weapons/icons/obj/energy.dmi'
+	icon_state = "bshg"
+	desc = parent_type::desc + " This one has been tinkered with by Central Command technicians to add blue-tinted furniture and squeeze out a few extra shots before running dry."
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/hellfire/blueshield)
 
 /obj/item/choice_beacon/blueshield
@@ -112,23 +112,10 @@
 
 /obj/item/choice_beacon/blueshield/generate_display_names()
 	var/static/list/selectable_gun_types = list(
-		"Takbok Revolver Set" = /obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/takbok,
+		"Fendér Revolver Set" = /obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/bluvolva,
 		"Custom Hellfire Laser Rifle" = /obj/item/gun/energy/laser/hellgun/blueshield,
 		"Sindano Submachine Gun" = /obj/item/gun/ballistic/automatic/sol_smg,
 		"Katyusha Shotgun Gunset" = /obj/item/storage/toolbox/guncase/nova/katyusha,
 	)
 
 	return selectable_gun_types
-
-/obj/item/storage/medkit/tactical/blueshield
-	name = "blueshield combat medical kit"
-	desc = "Combat medic to the rescue!"
-	color = "#AAAAFF"
-
-/obj/item/storage/medkit/tactical/blueshield/PopulateContents()
-	if(empty)
-		return
-	new /obj/item/stack/medical/gauze(src)
-	new /obj/item/stack/medical/bruise_pack(src)
-	new /obj/item/stack/medical/ointment(src)
-	new /obj/item/healthanalyzer(src)

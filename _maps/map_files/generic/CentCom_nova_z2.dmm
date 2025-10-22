@@ -7094,7 +7094,7 @@
 "gki" = (
 /obj/effect/turf_decal/tile/blue/fourcorners,
 /obj/machinery/stasis,
-/obj/machinery/defibrillator_mount/directional/east,
+/obj/machinery/defibrillator_mount/loaded/directional/east,
 /turf/open/floor/iron/freezer,
 /area/centcom/interlink)
 "gko" = (
@@ -7767,7 +7767,7 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 8
 	},
-/obj/machinery/defibrillator_mount/directional/west,
+/obj/machinery/defibrillator_mount/loaded/directional/west,
 /obj/machinery/computer/operating{
 	dir = 4
 	},
@@ -8202,6 +8202,13 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/interlink)
+"ibW" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 1
+	},
+/obj/machinery/wall_healer/free/directional/north,
+/turf/open/floor/iron/edge,
+/area/centcom/interlink)
 "iet" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 10
@@ -8268,6 +8275,13 @@
 	},
 /obj/effect/light_emitter/interlink,
 /turf/open/floor/stone,
+/area/centcom/interlink)
+"iiF" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 4
+	},
+/obj/machinery/wall_healer/free/directional/east,
+/turf/open/floor/iron/dark,
 /area/centcom/interlink)
 "ikb" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -8939,6 +8953,13 @@
 "jxw" = (
 /obj/effect/decal/cleanable/generic,
 /turf/open/floor/iron/smooth_large,
+/area/centcom/interlink)
+"jyB" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8
+	},
+/obj/machinery/wall_healer/free/directional/west,
+/turf/open/floor/iron/dark,
 /area/centcom/interlink)
 "jzL" = (
 /obj/structure/spacevine{
@@ -11469,6 +11490,10 @@
 "nvI" = (
 /obj/effect/light_emitter/interlink,
 /turf/open/floor/carpet/stellar,
+/area/centcom/interlink)
+"nwQ" = (
+/obj/machinery/wall_healer/free/directional/east,
+/turf/open/floor/iron/smooth_large,
 /area/centcom/interlink)
 "nxI" = (
 /obj/structure/chair/comfy/black{
@@ -14290,6 +14315,10 @@
 /obj/machinery/computer/libraryconsole/bookmanagement,
 /turf/open/indestructible/hotelwood,
 /area/centcom/holding/cafe)
+"rJS" = (
+/obj/machinery/wall_healer/free/directional/west,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/interlink)
 "rKT" = (
 /obj/effect/turf_decal/trimline/white/filled/corner,
 /turf/open/floor/iron/dark/smooth_large,
@@ -17786,6 +17815,16 @@
 	},
 /turf/open/indestructible/carpet,
 /area/centcom/holding/cafe)
+"xjS" = (
+/obj/effect/turf_decal/trimline/white/filled/line{
+	dir = 8
+	},
+/obj/effect/light_emitter/interlink,
+/obj/machinery/wall_healer/free/directional/west,
+/turf/open/floor/iron/dark/textured_edge{
+	dir = 4
+	},
+/area/centcom/interlink)
 "xkb" = (
 /obj/machinery/mass_driver/trash{
 	dir = 1;
@@ -28440,7 +28479,7 @@ qIY
 aHL
 cFK
 wTk
-jpr
+ibW
 iKR
 oHR
 wTk
@@ -31260,7 +31299,7 @@ ubQ
 rhV
 rhV
 rhV
-rhV
+xjS
 rhV
 knB
 ubQ
@@ -31275,7 +31314,7 @@ jnu
 wmW
 wTk
 ouJ
-dbl
+rJS
 qWY
 ftB
 ftB
@@ -35901,7 +35940,7 @@ jnu
 fIY
 wTk
 dbl
-dbl
+nwQ
 qWY
 ftB
 ftB
@@ -42337,7 +42376,7 @@ jne
 qnJ
 nFS
 nFS
-lkz
+jyB
 hyW
 wTk
 aaa
@@ -47477,7 +47516,7 @@ vpb
 wSW
 sdx
 sdx
-fcG
+iiF
 sIm
 wTk
 aaa

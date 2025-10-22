@@ -1,2 +1,12 @@
 @echo off
-"%~dp0\..\bootstrap\javascript.bat" "%~dp0\build.js" %*
+REM SS1984 ADDITION START
+echo Starting SS1984 RUST update/compile...
+call "%~dp0\..\build_rust_1984.bat" %*
+IF ERRORLEVEL 1 (
+    ECHO "Error occured while building rust. Check other messages for more info"
+    pause
+    exit %ERRORLEVEL%
+)
+echo Starting actual build...
+REM SS1984 ADDITION END
+"%~dp0\..\bootstrap\javascript.bat" "%~dp0\build.ts" %*

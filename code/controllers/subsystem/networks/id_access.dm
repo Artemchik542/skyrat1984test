@@ -31,8 +31,6 @@ SUBSYSTEM_DEF(id_access)
 	var/list/station_pda_templates = list()
 	/// Helper list containing all station regions.
 	var/list/station_regions = list()
-	/// Contains all station trims, but not nt rep		// SS1984 ADDITION
-	var/list/station_job_templates_no_ntr = list()		// SS1984 ADDITION
 
 	/// The roundstart generated code for the spare ID safe. This is given to the Captain on shift start. If there's no Captain, it's given to the HoP. If there's no HoP
 	var/spare_id_safe_code = ""
@@ -217,6 +215,8 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
 		if(!length(trim.template_access))
 			continue
+		if (trim.hide_in_templates > TRIM_HIDE_NONE) // SS1984 ADDITION
+			continue // SS1984 ADDITION
 
 		station_job_templates[trim_path] = trim.assignment
 		for(var/access in trim.template_access)
@@ -227,26 +227,16 @@ SUBSYSTEM_DEF(id_access)
 				continue
 			var/list/templates = manager["templates"]
 			templates[trim_path] = trim.assignment
-// SS1984 ADDITION START
-	var/list/station_job_trims_no_ntr = subtypesof(/datum/id_trim/job) - (/datum/id_trim/job/nanotrasen_consultant)
-	for(var/trim_path in station_job_trims_no_ntr)
-		var/datum/id_trim/job/trim = trim_singletons_by_path[trim_path]
-		if(!length(trim.template_access))
-			continue
 
-		station_job_templates_no_ntr[trim_path] = trim.assignment
-		for(var/access in trim.template_access)
-			var/list/manager = sub_department_managers_tgui["[access]"]
-			if(!manager)
-				if(access != ACCESS_CHANGE_IDS)
-					WARNING("Invalid template access access \[[access]\] registered with [trim_path]. Template added to global list anyway.")
-				continue
-			var/list/templates = manager["templates"]
-			templates[trim_path] = trim.assignment
-// SS1984 ADDITION END
 	var/list/centcom_job_trims = typesof(/datum/id_trim/centcom) - typesof(/datum/id_trim/centcom/corpse) + (/datum/id_trim/job/nanotrasen_consultant)	// SS1984 EDIT ORIGINAL var/list/centcom_job_trims = typesof(/datum/id_trim/centcom) - typesof(/datum/id_trim/centcom/corpse)
 	for(var/trim_path in centcom_job_trims)
 		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
+		// SS1984 ADDITION START
+		if (istype(trim, /datum/id_trim/job))
+			var/datum/id_trim/job/trim_job = trim
+			if (trim_job.hide_in_templates > TRIM_HIDE_STATION)
+				continue
+		// SS1984 ADDITION END
 		centcom_job_templates[trim_path] = trim.assignment
 
 	var/list/all_pda_paths = typesof(/obj/item/modular_computer/pda)
@@ -451,6 +441,9 @@ SUBSYSTEM_DEF(id_access)
 	id_card.update_label()
 	id_card.update_icon()
 
+	// Apply any currently active RETA grants to this newly trimmed card
+	apply_active_reta_grants_to_card(id_card)
+
 	return TRUE
 
 /**
@@ -491,7 +484,10 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
+
+	// Apply any currently active RETA grants to this card with updated trim override
+	apply_active_reta_grants_to_card(id_card)
 
 /**
  * Removes a trim from a ID card.
@@ -512,7 +508,7 @@ SUBSYSTEM_DEF(id_access)
 
 	if (ishuman(id_card.loc))
 		var/mob/living/carbon/human/owner = id_card.loc
-		owner.sec_hud_set_ID()
+		owner.update_ID_card()
 
 /**
  * Adds the accesses associated with a trim to an ID card.
@@ -534,6 +530,9 @@ SUBSYSTEM_DEF(id_access)
 	if(istype(trim, /datum/id_trim/job))
 		var/datum/id_trim/job/job_trim = trim // Here is where we update a player's paycheck department for the purposes of discounts/paychecks.
 		id_card.registered_account.account_job.paycheck_department = job_trim.job.paycheck_department
+
+	// Apply any currently active RETA grants to this card with updated trim access
+	apply_active_reta_grants_to_card(id_card)
 
 /**
  * Tallies up all accesses the card has that have flags greater than or equal to the access_flag supplied.
@@ -567,62 +566,63 @@ SUBSYSTEM_DEF(id_access)
 	) as /alist
 
 	var/alist/returned_record = alist(
-		"Name" = null,
-		"Age" = null,
-		"Assignment" = null,
-		"Account ID" = null,
-		"Account Holder" = null,
-		"Account Assignment" = null,
-		"Accesses" = null,
+		"name" = null,
+		"age" = null,
+		"assignment" = null,
+		"account_id" = null,
+		"account_holder" = null,
+		"account_assignment" = null,
+		"accesses" = null,
 	)
 	. = returned_record
 	if(isnull(target_of_record))
-		.["Name"] = ID_READ_FAILURE
-		.["Age"] = ID_READ_FAILURE
-		.["Assignment"] = ID_READ_FAILURE
-		.["Account ID"] = ID_READ_FAILURE
-		.["Account Holder"] = ID_READ_FAILURE
-		.["Account Assignment"] = ID_READ_FAILURE
+		.["name"] = ID_READ_FAILURE
+		.["age"] = ID_READ_FAILURE
+		.["assignment"] = ID_READ_FAILURE
+		.["account_id"] = ID_READ_FAILURE
+		.["account_holder"] = ID_READ_FAILURE
+		.["account_assignment"] = ID_READ_FAILURE
+		.["accesses"] = ID_READ_FAILURE
 		.[ID_READ_FAILURE] = ID_READ_FAILURE
 		return .
 	var/mob/living/target = astype(target_of_record, /mob/living)
 	if(target)
-		if(!issilicon(target))
+		if(!issilicon(target) && !isdrone(target))
 			. = __in_character_record_id_information(astype(target.get_idcard(), /obj/item/card/id/advanced))
 			return .
-		.["Name"] = target.name
-		.["Age"] = "INSPECT MANUFACTURER MANIFEST"
-		.["Account ID"] = 0
-		.["Account Holder"] = "NO ACCOUNT."
-		.["Account Assignment"] = "NO ACCOUNT."
-		.["Bank Account"] = "N/A"
-		.["Assignment"] = target.mind?.assigned_role?.title
+		.["name"] = target.name
+		.["age"] = 0
+		.["assignment"] = "Silicon"
+		.["account_id"] = null
+		.["account_holder"] = null
+		.["account_assignment"] = null
+		.["accesses"] = null
 		.[SILICON_OVERRIDE] = SILICON_OVERRIDE
 		return .
 	var/obj/item/card/id/advanced/id_card = astype(target_of_record, /obj/item/card/id/advanced)
 	if(id_card)
-		.["Name"] = id_card.registered_name || "Unknown"
-		.["Age"] = id_card.registered_age || "Unknown"
-		.["Assignment"] = id_card.assignment || "Unassigned"
-		.["Accesses"] = id_card.access
+		.["name"] = id_card.registered_name || "Unknown"
+		.["age"] = id_card.registered_age || "Unknown"
+		.["assignment"] = id_card.assignment || "Unassigned"
+		.["accesses"] = id_card.access
 		var/datum/bank_account/id_account = id_card.registered_account
 		if(istype(id_card, /obj/item/card/id/advanced/chameleon) && !bypass_chameleon)
 			// Generate a bogey record based only on the ID card
 			// Generates a random bank account number every time as a 'spot the thread' for anyone who
 			// went through records for this entry for whatever reason.
-			.["Account ID"] = rand(111111, 999999)
-			.["Account Holder"] = .["Name"]
-			.["Account Assignment"] = .["Assignment"]
+			.["account_id"] = rand(111111, 999999)
+			.["account_holder"] = .["name"]
+			.["account_assignment"] = .["assignment"]
 			.[CHAMELEON_OVERRIDE] = CHAMELEON_OVERRIDE
 			return .
 		if(!id_account)
-			.["Account ID"] = 0
-			.["Account Holder"] = "NO ACCOUNT."
-			.["Account Assignment"] = "NO ACCOUNT."
+			.["account_id"] = 0
+			.["account_holder"] = "NO ACCOUNT."
+			.["account_assignment"] = "NO ACCOUNT."
 			return .
-		.["Account ID"] = id_account.account_id
-		.["Account Holder"] = id_account.account_holder
-		.["Account Assignment"] = id_account.account_job?.title || "Unassigned"
+		.["account_id"] = id_account.account_id
+		.["account_holder"] = id_account.account_holder
+		.["account_assignment"] = id_account.account_job?.title || "Unassigned"
 		return .
 	else
 		. = ID_DATA(null)

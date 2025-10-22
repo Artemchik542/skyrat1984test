@@ -92,7 +92,7 @@ SUBSYSTEM_DEF(vote)
 	var/to_display = current_vote.get_result_text(winners, final_winner, non_voters)
 
 	var/total_votes = 0
-	var/list/vote_choice_data = list()
+	var/list/vote_choice_data = current_vote.choices?.len > 0 ? list() : null // SS1984 EDIT, prevent runtime caused by empty list by passing null instead. Original: var/list/vote_choice_data = list()
 	for(var/choice in current_vote.choices)
 		var/choice_votes = current_vote.choices[choice]
 		total_votes += choice_votes
@@ -343,6 +343,7 @@ SUBSYSTEM_DEF(vote)
 				"countMethod" = current_vote.count_method,
 				"displayStatistics" = current_vote.display_statistics,
 				"choices" = choices,
+				"choicesHighlight" = current_vote.choices_highlight, // SS1984 ADDITION
 				"vote" = vote_data,
 			)
 
@@ -461,7 +462,7 @@ SUBSYSTEM_DEF(vote)
 /datum/action/vote/IsAvailable(feedback = FALSE)
 	return TRUE // Democracy is always available to the free people
 
-/datum/action/vote/Trigger(trigger_flags)
+/datum/action/vote/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

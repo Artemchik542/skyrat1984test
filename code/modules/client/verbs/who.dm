@@ -36,7 +36,7 @@
 									entry += " - <font color='black'><b>МЕРТВ</b></font>" //SS1984 EDIT
 							else
 								entry += " - <font color='black'><b>МЕРТВ</b></font>" //SS1984 EDIT
-					if(is_special_character(client.mob))
+					if(client.mob.is_antag())
 						entry += " - <b><font color='red'>Антагонист</font></b>" //SS1984 EDIT
 				entry += " [ADMIN_QUE(client.mob)]"
 				entry += " ([round(client.avgping, 1)]ms)"
@@ -88,6 +88,7 @@
 	payload_string = replacetext(payload_string, "\[Mentor\]", "\[<font color='#67761e'>Ментор</font>\]")
 	payload_string = replacetext(payload_string, "\[Head Developer\]", "\[<font color='#2ecc71'>Главный Разработчик</font>\]")
 	payload_string = replacetext(payload_string, "\[Developer\]",	"\[<font color='#2ecc71'>Разработчик</font>\]")
+	payload_string = replacetext(payload_string, "\[Eventologist\]",	"\[<font color='#0000FF'>Ивентолог</font>\]")
 	// SS1984 EDIT END
 
 	lines += payload_string
@@ -97,13 +98,12 @@
 /// Proc that generates the applicable string to dispatch to the client for adminwho.
 /client/proc/generate_adminwho_string()
 	var/list/list_of_admins = get_list_of_admins()
-	if(isnull(list_of_admins))
+	if(isnull(list_of_admins) || list_of_admins.len < 1)
 		return NO_ADMINS_ONLINE_MESSAGE
 
 	var/list/message_strings = list()
 	if(isnull(holder))
 		message_strings += get_general_adminwho_information(list_of_admins)
-		message_strings += NO_ADMINS_ONLINE_MESSAGE
 	else
 		message_strings += get_sensitive_adminwho_information(list_of_admins)
 

@@ -73,7 +73,7 @@
 #define MAXIMUM_MARKINGS_PER_LIMB 3
 
 #define BODY_SIZE_NORMAL 1.00
-#define BODY_SIZE_MAX 1.5 //SS220 EDIT CHANGE
+#define BODY_SIZE_MAX 1.2 // SS1984 EDIT, original: #define BODY_SIZE_MAX 1.5
 #define BODY_SIZE_MIN 0.9 //SS220 EDIT CHANGE
 
 //In inches
@@ -152,6 +152,8 @@
 #define SPECIES_FELINE_PRIMITIVE "primitive_felinid"
 #define SPECIES_ABDUCTORWEAK "abductorweak"
 #define SPECIES_KOBOLD "kobold"
+#define SPECIES_RAMATAE "ramatan"
+#define SPECIES_INSECTOID "insectoid"
 
 #define SPECIES_MUTANT "mutant"
 #define SPECIES_MUTANT_INFECTIOUS "infectious_mutant"
@@ -160,3 +162,4 @@
 
 // Leaving this here because it's used for bodyparts, like SPECIES_X are, but since taurs aren't a species... Named it LIMBS instead.
 #define LIMBS_TAUR "taur"
+#define LIMBS_HARPY "harpy"

@@ -29,10 +29,10 @@
 		robot_user.cell.use(STANDARD_CELL_CHARGE * 0.2)
 	return ..()
 
-/datum/emote/living/carbon/human/scream
+/datum/emote/living/carbon/human/screech
 	only_forced_audio = FALSE
 
-/datum/emote/living/carbon/human/scream/get_sound(mob/living/carbon/human/user)
+/datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
 	if(!istype(user))
 		return
 	if(isnull(user.selected_scream) || !(LAZYLEN(user.selected_scream.male_screamsounds) || LAZYLEN(user.selected_scream.female_screamsounds))) //For things that don't have a selected scream(npcs)

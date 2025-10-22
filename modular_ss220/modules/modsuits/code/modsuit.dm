@@ -26,8 +26,8 @@
 	melee = 45
 	bullet = 45
 	laser = 30
-	energy = 35
-	bomb = 25
+	energy = 40
+	bomb = 30
 	bio = 100
 	fire = 80
 	acid = 80
@@ -164,11 +164,11 @@
 //ntr corporate
 
 /datum/armor/mod_theme_corporate_official
-	melee = 20
+	melee = 25
 	bullet = 20
-	laser = 15
-	energy = 15
-	bomb = 25
+	laser = 20
+	energy = 20
+	bomb = 30
 	bio = 100
 	fire = 75
 	acid = 75
@@ -188,7 +188,8 @@
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	charge_drain = DEFAULT_CHARGE_DRAIN
 	complexity_max = DEFAULT_MAX_COMPLEXITY - 5
-	slowdown_deployed = 0.35
+	slowdown_deployed = 0.25
+	inbuilt_modules = list(/obj/item/mod/module/hearing_protection)
 	allowed_suit_storage = list(
 		/obj/item/assembly/flash,
 		/obj/item/melee/baton,

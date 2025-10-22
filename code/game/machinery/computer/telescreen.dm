@@ -101,12 +101,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	var/can_range = FALSE
 	if(iscarbon(user))
 		var/mob/living/carbon/carbon_user = user
-		if(carbon_user.dna?.check_mutation(/datum/mutation/human/telekinesis) && tkMaxRangeCheck(user, src))
+		if(carbon_user.dna?.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(user, src))
 			can_range = TRUE
 	if(HAS_SILICON_ACCESS(user) || (user.interaction_range && user.interaction_range >= get_dist(user, src)))
 		can_range = TRUE
 
-	if((can_range || user.CanReach(src)) && ISADVANCEDTOOLUSER(user))
+	if((can_range || IsReachableBy(user)) && ISADVANCEDTOOLUSER(user))
 		if(user.incapacitated)
 			return UI_UPDATE
 		if(!can_range && user.can_hold_items() && (user.usable_hands <= 0 || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)))

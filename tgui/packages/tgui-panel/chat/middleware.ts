@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Store } from 'common/redux';
+import type { Store } from 'common/redux';
 import { storage } from 'common/storage';
 import DOMPurify from 'dompurify';
 
@@ -63,7 +63,7 @@ const loadChatFromStorage = async (store: Store) => {
     return;
   }
   if (messages) {
-    for (let message of messages) {
+    for (const message of messages) {
       if (message.html) {
         message.html = DOMPurify.sanitize(message.html, {
           FORBID_TAGS,
@@ -124,23 +124,22 @@ export const chatMiddleware = (store: Store) => {
       }
 
       const sequence_count = sequences.length;
-      seq_check: if (sequence_count > 0) {
+      if (sequence_count > 0) {
         if (sequences_requested.includes(sequence)) {
           sequences_requested.splice(sequences_requested.indexOf(sequence), 1);
           // if we are receiving a message we requested, we can stop reliability checks
-          break seq_check;
-        }
-
-        // cannot do reliability if we don't have any messages
-        const expected_sequence = sequences[sequence_count - 1] + 1;
-        if (sequence !== expected_sequence) {
-          for (
-            let requesting = expected_sequence;
-            requesting < sequence;
-            requesting++
-          ) {
-            sequences_requested.push(requesting);
-            Byond.sendMessage('chat/resend', requesting);
+        } else {
+          // cannot do reliability if we don't have any messages
+          const expected_sequence = sequences[sequence_count - 1] + 1;
+          if (sequence !== expected_sequence) {
+            for (
+              let requesting = expected_sequence;
+              requesting < sequence;
+              requesting++
+            ) {
+              sequences_requested.push(requesting);
+              Byond.sendMessage('chat/resend', requesting);
+            }
           }
         }
       }
@@ -195,6 +194,7 @@ export const chatMiddleware = (store: Store) => {
     if (type === 'roundrestart') {
       // Save chat as soon as possible
       saveChatToStorage(store);
+      startAsyncReconnect(); // SS1984 ADDITION
       return next(action);
     }
     if (type === saveChatToDisk.type) {
@@ -208,3 +208,14 @@ export const chatMiddleware = (store: Store) => {
     return next(action);
   };
 };
+// SS1984 ADDITION START
+function delay_reconnect(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function startAsyncReconnect(): Promise<void> {
+  for (let i = 0; i < 8; i++) {
+    await delay_reconnect(15 * 1000); // Wait for 15 seconds
+    Byond.command('.reconnect');
+  }
+}
+// SS1984 ADDITION END

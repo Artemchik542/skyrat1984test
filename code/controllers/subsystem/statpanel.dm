@@ -44,7 +44,7 @@ SUBSYSTEM_DEF(statpanels)
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
 		*/
-		var/real_round_time = world.timeofday - SSticker.real_round_start_time
+		// SS1984 REMOVAL var/real_round_time = world.timeofday - SSticker.real_round_start_time
 		global_data = list(
 			"Time Dilation: [round(SStime_track.time_dilation_current,1)]% AVG:([round(SStime_track.time_dilation_avg_fast,1)]%, [round(SStime_track.time_dilation_avg,1)]%, [round(SStime_track.time_dilation_avg_slow,1)]%)",
 		)
@@ -68,7 +68,7 @@ SUBSYSTEM_DEF(statpanels)
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Station Time: [station_time_timestamp()]",
 			"Round Timer: [ROUND_TIME()]",
-			"Actual Round Timer: [time2text(real_round_time, "hh:mm:ss", 0)]"
+			// SS1984 REMOVAL "Actual Round Timer: [time2text(real_round_time, "hh:mm:ss", 0)]"
 		)
 		// NOVA EDIT CHANGE END
 
@@ -224,7 +224,7 @@ SUBSYSTEM_DEF(statpanels)
 		list("World Time:", "[world.time]"),
 		list("Globals:", GLOB.stat_entry(), text_ref(GLOB)),
 		list("[config]:", config.stat_entry(), text_ref(config)),
-		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%)) (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
+		list("Byond:", "(FPS:[world.fps]) (TickCount:[world.time/world.tick_lag]) (TickDrift:[round(Master.tickdrift,1)]([round((Master.tickdrift/(world.time/world.tick_lag))*100,0.1)]%))\n  (Internal Tick Usage: [round(MAPTICK_LAST_INTERNAL_TICK_USAGE,0.1)]%)"),
 		list("Master Controller:", Master.stat_entry(), text_ref(Master)),
 		list("Failsafe Controller:", Failsafe.stat_entry(), text_ref(Failsafe)),
 		list("","")

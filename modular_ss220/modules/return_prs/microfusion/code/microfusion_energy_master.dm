@@ -80,7 +80,7 @@
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
 		cell.use(round(cell.charge / severity))
-		chambered = null //we empty the chamber
+		set_chambered(null)
 		recharge_newshot() //and try to charge a new shot
 		update_appearance()
 
@@ -114,9 +114,6 @@
 		attachments -= type
 		var/obj/item/microfusion_gun_attachment/attachment = new type(src)
 		add_attachment(attachment)
-
-/obj/item/gun/microfusion/give_gun_safeties()
-	AddComponent(/datum/component/gun_safety)
 
 /obj/item/gun/microfusion/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_energy))
@@ -154,7 +151,7 @@
 /obj/item/gun/microfusion/recharge_newshot()
 	if (!microfusion_lens || !cell || !phase_emitter)
 		return
-	chambered = microfusion_lens
+	set_chambered(microfusion_lens)
 	if(!chambered.loaded_projectile)
 		chambered.newshot()
 
@@ -162,7 +159,7 @@
 	if(chambered && !chambered.loaded_projectile && cell) //if loaded_projectile is null, i.e the shot has been fired...
 		var/obj/item/ammo_casing/energy/shot = chambered
 		cell.use(shot.e_cost + extra_power_usage)//... drain the cell
-	chambered = null //either way, released the prepared shot
+	set_chambered(null)
 	recharge_newshot() //try to charge a new shot
 
 /obj/item/gun/microfusion/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)

@@ -5,11 +5,6 @@
 
 /obj/structure/closet/secure_closet/captains/PopulateContents()
 	..()
-
-	new /obj/item/storage/backpack/captain(src)
-	new /obj/item/storage/backpack/satchel/cap(src)
-	new /obj/item/storage/backpack/duffelbag/captain(src)
-	new /obj/item/storage/backpack/messenger/cap(src)
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/storage/bag/garment/captain(src)
@@ -22,7 +17,7 @@
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
-	new /obj/item/storage/belt/sabre(src)
+	new /obj/item/storage/belt/sheath/sabre(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
@@ -143,13 +138,13 @@
 	..()
 	new /obj/item/storage/box/evidence(src)
 	new /obj/item/radio/headset/headset_sec(src)
-	// new /obj/item/detective_scanner(src) // NOVA EDIT REMOVAL
+	new /obj/item/detective_scanner(src) // SS1984 REVERT OF NOVA REMOVAL
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/holosign_creator/security(src)
 	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/clothing/suit/armor/vest/det_suit(src)
 	new /obj/item/toy/crayon/white(src) // NOVA EDIT CHANGE - ORIGINAL: /obj/item/storage/belt/holster/detective/full(src)
-	//new /obj/item/pinpointer/crew(src) // NOVA EDIT REMOVAL - Added to detective outfit backpack instead
+	new /obj/item/pinpointer/crew(src) // // SS1984 REVERT OF NOVA REMOVAL
 	new /obj/item/binoculars(src)
 	new /obj/item/storage/box/rxglasses/spyglasskit(src)
 	new /obj/item/clothing/head/fedora/inspector_hat(src)

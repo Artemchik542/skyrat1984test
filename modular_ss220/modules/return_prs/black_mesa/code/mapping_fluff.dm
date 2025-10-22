@@ -142,7 +142,6 @@
 	icon = 'modular_ss220/modules/return_prs/black_mesa/icons/misc/serviette.dmi'
 	/// A count of how many serviettes are left in the pack
 	var/number_remaining = 4
-	w_class = WEIGHT_CLASS_SMALL
 
 /obj/item/serviette_pack/update_icon_state()
 	. = ..()

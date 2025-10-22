@@ -178,12 +178,7 @@
 	return SSaccessories.sprite_accessories["ears"] // NOVA EDIT - Customization - ORIGINAL: return SSaccessories.ears_list
 
 /datum/bodypart_overlay/mutant/cat_ears/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if((human.head?.flags_inv & HIDEHAIR) || (human.wear_mask?.flags_inv & HIDEHAIR))
-		return FALSE
-	return TRUE
+	return !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/cat_ears/get_image(image_layer, obj/item/bodypart/limb)
 	var/mutable_appearance/base_ears = ..()
@@ -230,15 +225,15 @@
 	name = "basic cybernetic ears"
 	icon_state = "ears-c"
 	desc = "A basic cybernetic organ designed to mimic the operation of ears."
-	damage_multiplier = 0.9
+	damage_multiplier = 1.2
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
 
 /obj/item/organ/ears/cybernetic/upgraded
 	name = "cybernetic ears"
 	icon_state = "ears-c-u"
-	desc =  "An advanced cybernetic ear, surpassing the performance of organic ears."
-	damage_multiplier = 0.5
+	desc =  "A cybernetic ear, surpassing the performance of organic ears."
+	damage_multiplier = 0.75
 
 /obj/item/organ/ears/cybernetic/whisper
 	name = "whisper-sensitive cybernetic ears"
@@ -256,6 +251,13 @@
 /obj/item/organ/ears/cybernetic/whisper/on_mob_remove(mob/living/carbon/ear_owner)
 	. = ..()
 	REMOVE_TRAIT(ear_owner, TRAIT_GOOD_HEARING, ORGAN_TRAIT)
+
+/obj/item/organ/ears/cybernetic/volume
+	name = "volume-adjusting cybernetic ears"
+	icon_state = "ears-c-u"
+	desc = "Advanced cybernetic ears capable of dampening loud noises to protect their user."
+	bang_protect = 1
+	damage_multiplier = 0.5
 
 // "X-ray ears" that let you hear through walls
 /obj/item/organ/ears/cybernetic/xray

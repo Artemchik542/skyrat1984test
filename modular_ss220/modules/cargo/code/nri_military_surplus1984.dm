@@ -103,6 +103,10 @@
 	subcategory = "Miscellaneous Supplies"
 	cost = PAYCHECK_CREW
 
+/datum/armament_entry/company_import/nri_surplus/misc/stun_gun //Not a gun but it's only fair to place similar items close to each other
+	item_type = /obj/item/melee/baton/security/stun_gun/loaded
+	cost = PAYCHECK_COMMAND * 5 //Similarly live action roleplay'iy stun baton lite
+
 /datum/armament_entry/company_import/nri_surplus/misc/flares
 	item_type = /obj/item/storage/box/nri_flares
 	cost = PAYCHECK_LOWER
@@ -134,36 +138,82 @@
 	item_type = /obj/item/sign/flag/nri
 	cost = PAYCHECK_LOWER
 
-/datum/armament_entry/company_import/nri_surplus/firearm
-	subcategory = "Firearms"
+/datum/armament_entry/company_import/nri_surplus/misc/hc_flag
+	item_type = /obj/item/sign/flag/hc
+	cost = PAYCHECK_LOWER
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/sidearm
+	subcategory = "Sidearms"
 	cost = PAYCHECK_COMMAND * 12
 	restricted = TRUE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/shotgun_revolver
+/datum/armament_entry/company_import/nri_surplus/sidearm/shotgun_revolver
 	item_type = /obj/item/gun/ballistic/revolver/shotgun_revolver
 	contraband = TRUE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/zashch
+/datum/armament_entry/company_import/nri_surplus/sidearm/zashch
 	item_type = /obj/item/gun/ballistic/automatic/pistol/zashch
 	contraband = TRUE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/plasma_thrower
+/datum/armament_entry/company_import/nri_surplus/sidearm/plasma_thrower
 	item_type = /obj/item/gun/ballistic/automatic/pistol/plasma_thrower
 	contraband = TRUE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/plasma_marksman
+/datum/armament_entry/company_import/nri_surplus/sidearm/plasma_marksman
 	item_type = /obj/item/gun/ballistic/automatic/pistol/plasma_marksman
 	contraband = TRUE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/crank_taser
+/datum/armament_entry/company_import/nri_surplus/sidearm/crank_taser
 	item_type = /obj/item/gun/energy/taser/crank
 	cost = PAYCHECK_COMMAND * 15 //No disabler, less charge in general in comparison to a normal double-mode taser; yet chargable on the spot (even if unwieldy)
 	restricted = FALSE
 
-/datum/armament_entry/company_import/nri_surplus/firearm/stun_gun //Not a gun but it's only fair to place similar items close to each other
-	item_type = /obj/item/melee/baton/security/stun_gun/loaded
-	cost = PAYCHECK_COMMAND * 5 //Similarly live action roleplay'iy stun baton lite
+/datum/armament_entry/company_import/nri_surplus/longarm
+	subcategory = "Longarms"
+	cost = PAYCHECK_COMMAND * 16
+	restricted = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/lanca
+	item_type = /obj/item/gun/ballistic/rifle/sporterized/qmr
+	cost = PAYCHECK_COMMAND * 20
 	restricted = FALSE
+
+/*
+/datum/armament_entry/company_import/nri_surplus/longarm/sakhno_rifle
+	item_type = /obj/item/gun/ballistic/rifle/boltaction
+	cost = PAYCHECK_COMMAND * 20
+
+/datum/armament_entry/company_import/nri_surplus/longarm/lanca
+	item_type = /obj/item/gun/ballistic/automatic/lanca
+	cost = PAYCHECK_COMMAND * 24
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/miecz
+	item_type = /obj/item/gun/ballistic/automatic/miecz
+	cost = PAYCHECK_COMMAND * 16
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/napad
+	item_type = /obj/item/gun/ballistic/automatic/napad
+	cost = PAYCHECK_COMMAND * 19
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/pulse_rifle
+	item_type = /obj/item/gun/ballistic/automatic/pulse_rifle
+	cost = PAYCHECK_COMMAND * 25
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/pulse_sniper //for other time
+	item_type = /obj/item/gun/ballistic/rifle/pulse_sniper
+	cost = PAYCHECK_COMMAND * 22
+	contraband = TRUE
+
+/datum/armament_entry/company_import/nri_surplus/longarm/anti_materiel_rifle
+	item_type = /obj/item/gun/ballistic/automatic/wylom
+	cost = PAYCHECK_COMMAND * 36
+	contraband = TRUE
+*/
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo
 	subcategory = "Firearm Magazines"
@@ -182,8 +232,13 @@
 	item_type = /obj/item/ammo_box/magazine/miecz/spawns_empty
 	contraband = TRUE
 
+/datum/armament_entry/company_import/nri_surplus/firearm_ammo/napad
+	item_type = /obj/item/ammo_box/magazine/napad/spawns_empty
+	cost = PAYCHECK_CREW * 4
+	contraband = TRUE
+
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/sakhno
-	item_type = /obj/item/ammo_box/strilka310
+	item_type = /obj/item/ammo_box/speedloader/strilka310
 	cost = PAYCHECK_CREW * 6
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/lanca
@@ -191,9 +246,14 @@
 	contraband = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/lanca_qm
-	item_type = /obj/item/ammo_box/magazine/lanca/qmr/empty
-	cost = PAYCHECK_CREW
+	item_type = /obj/item/ammo_box/magazine/lanca/qmr
+	cost = PAYCHECK_CREW * 3
 	restricted = FALSE
+
+/datum/armament_entry/company_import/nri_surplus/firearm_ammo/zaibas
+	item_type = /obj/item/ammo_box/magazine/pulse/spawns_empty
+	cost = PAYCHECK_CREW * 4
+	contraband = TRUE
 
 /datum/armament_entry/company_import/nri_surplus/firearm_ammo/amr_magazine
 	item_type = /obj/item/ammo_box/magazine/wylom

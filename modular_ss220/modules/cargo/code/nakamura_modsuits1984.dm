@@ -35,6 +35,7 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/core/plasma
 	item_type = /obj/item/mod/core/plasma
+	cost = PAYCHECK_COMMAND * 1.5
 
 /datum/armament_entry/company_import/nakamura_modsuits/core/ethereal
 	item_type = /obj/item/mod/core/ethereal
@@ -65,12 +66,13 @@
 /datum/armament_entry/company_import/nakamura_modsuits/plating/security
 	name = "MOD Security Plating"
 	item_type = /obj/item/mod/construction/plating/security
-	cost = PAYCHECK_COMMAND * 2
+	cost = PAYCHECK_COMMAND * 3
+	restricted = TRUE
 
 /datum/armament_entry/company_import/nakamura_modsuits/plating/clown
 	name = "MOD CosmoHonk (TM) Plating"
 	item_type = /obj/item/mod/construction/plating/cosmohonk
-	cost = PAYCHECK_COMMAND * 2
+	cost = PAYCHECK_COMMAND * 4
 	contraband = TRUE
 
 // MOD modules
@@ -94,11 +96,12 @@
 /datum/armament_entry/company_import/nakamura_modsuits/protection_modules/emp_shield
 	item_type = /obj/item/mod/module/emp_shield
 
-/datum/armament_entry/company_import/nakamura_modsuits/protection_modules/armor_plates
-	item_type = /obj/item/mod/module/armor_booster/retractplates
-	cost = PAYCHECK_COMMAND * 9
-	restricted = TRUE
-	contraband = TRUE
+// TODO: uncomment when return retractives
+// /datum/armament_entry/company_import/nakamura_modsuits/protection_modules/armor_plates
+// 	item_type = /obj/item/mod/module/armor_booster/retractplates
+// 	cost = PAYCHECK_COMMAND * 9
+// 	restricted = TRUE
+// 	contraband = TRUE
 
 // Utility modules, general purpose stuff that really anyone might want
 
@@ -111,7 +114,7 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/regulator
 	item_type = /obj/item/mod/module/thermal_regulator
-	cost = PAYCHECK_LOWER * 2
+	cost = PAYCHECK_CREW
 
 /datum/armament_entry/company_import/nakamura_modsuits/utility_modules/mouthhole
 	item_type = /obj/item/mod/module/mouthhole
@@ -173,7 +176,7 @@
 
 /datum/armament_entry/company_import/nakamura_modsuits/mobility_modules/atrocinator
 	item_type = /obj/item/mod/module/atrocinator
-	cost = PAYCHECK_COMMAND * 6
+	cost = PAYCHECK_COMMAND * 5
 	contraband = TRUE
 
 // Novelty modules, goofy stuff that's rare/unprintable, but doesn't fit in any of the above categories

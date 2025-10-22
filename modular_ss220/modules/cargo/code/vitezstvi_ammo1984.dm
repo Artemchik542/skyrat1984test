@@ -21,12 +21,6 @@
 	item_type = /obj/item/ammo_workbench_module/lethal
 	cost = PAYCHECK_COMMAND * 3
 
-// not a disk. adds print points
-/datum/armament_entry/company_import/vitezstvi/ammo_bench/reboot
-	name = "reusable module reauthenticator"
-	item_type = /obj/item/ammo_workbench_reboot
-	cost = PAYCHECK_CREW
-
 // disk but with the bits needed for EMP/fire bullets
 /datum/armament_entry/company_import/vitezstvi/ammo_bench/ammo_disk/lethal_gimmick
 	item_type = /obj/item/ammo_workbench_module/lethal_gimmick
@@ -69,6 +63,8 @@
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes
 	subcategory = "Ammunition Boxes"
 	cost = PAYCHECK_CREW
+	restricted = FALSE
+	contraband = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal
 	cost = PAYCHECK_COMMAND
@@ -83,7 +79,6 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/rubber_9mm
 	item_type = /obj/item/ammo_box/c9mm/rubber
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/cal_10mm
 	item_type = /obj/item/ammo_box/c10mm
@@ -94,14 +89,12 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/rubber_10mm
 	item_type = /obj/item/ammo_box/c10mm/rubber
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/cal_310
 	item_type = /obj/item/ammo_box/c310_cargo_box
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/rubber_310
 	item_type = /obj/item/ammo_box/c310_cargo_box/rubber
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/ap_310
 	item_type = /obj/item/ammo_box/c310_cargo_box/piercing
@@ -120,7 +113,6 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol35_disabler
 	item_type = /obj/item/ammo_box/c35sol/incapacitator
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/sol35_ripper
 	item_type = /obj/item/ammo_box/c35sol/ripper
@@ -131,7 +123,6 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/sol40_disabler
 	item_type = /obj/item/ammo_box/c40sol/fragmentation
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/sol40_flame
 	item_type = /obj/item/ammo_box/c40sol/incendiary
@@ -146,7 +137,6 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/trappiste585_disabler
 	item_type = /obj/item/ammo_box/c585trappiste/incapacitator
-	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/trappiste585_incendiary
 	item_type = /obj/item/ammo_box/c585trappiste/incendiary
@@ -154,7 +144,11 @@
 
 /datum/armament_entry/company_import/vitezstvi/ammo_boxes/kineticballs
 	item_type = /obj/item/ammo_box/advanced/kineticballs
-	restricted = FALSE
+
+/datum/armament_entry/company_import/vitezstvi/ammo_boxes/lethal/pulse_gun_ammo
+	item_type = /obj/item/ammo_box/pulse_cargo_box
+	cost = PAYCHECK_COMMAND * 5
+	contraband = TRUE
 
 // Revolver speedloaders
 
@@ -163,13 +157,13 @@
 	cost = PAYCHECK_COMMAND
 
 /datum/armament_entry/company_import/vitezstvi/speedloader/detective_lethal
-	item_type = /obj/item/ammo_box/c38
+	item_type = /obj/item/ammo_box/speedloader/c38
 
 /datum/armament_entry/company_import/vitezstvi/speedloader/detective_dumdum
-	item_type = /obj/item/ammo_box/c38/dumdum
+	item_type = /obj/item/ammo_box/speedloader/c38/dumdum
 
 /datum/armament_entry/company_import/vitezstvi/speedloader/detective_bouncy
-	item_type = /obj/item/ammo_box/c38/match
+	item_type = /obj/item/ammo_box/speedloader/c38/match
 
 // Shotgun boxes
 
@@ -219,9 +213,11 @@
 /datum/armament_entry/company_import/vitezstvi/grenade_shells
 	subcategory = "Grenade Shells"
 	cost = PAYCHECK_COMMAND
+	restricted = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/practice
 	item_type = /obj/item/ammo_box/c980grenade
+	restricted = FALSE
 
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/smoke
 	item_type = /obj/item/ammo_box/c980grenade/smoke
@@ -232,11 +228,9 @@
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/shrapnel
 	item_type = /obj/item/ammo_box/c980grenade/shrapnel
 	cost = PAYCHECK_COMMAND * 2
-	restricted = TRUE
 	contraband = TRUE
 
 /datum/armament_entry/company_import/vitezstvi/grenade_shells/phosphor
 	item_type = /obj/item/ammo_box/c980grenade/shrapnel/phosphor
 	cost = PAYCHECK_COMMAND * 3
-	restricted = TRUE
 	contraband = TRUE

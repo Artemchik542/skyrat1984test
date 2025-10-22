@@ -72,6 +72,16 @@
 		"Junior Runner",
 	)
 
+/datum/job/bridge_assistant
+	alt_titles = list(
+		"Bridge Officer",
+		"Command Aide",
+		"Command Cadet",
+		"Bridge Attendant",
+		"Command Secretary",
+		"Command Intern",
+	)
+
 /datum/job/blueshield
 	alt_titles = list(
 		"Blueshield",
@@ -91,12 +101,14 @@
 		"Junior Botanist",
 	)
 
-/datum/job/bouncer
-	alt_titles = list(
-		"Bouncer",
-		"Service Guard",
-		"Doorman",
-	)
+// SS1984 REMOVAL START
+// /datum/job/bouncer
+// 	alt_titles = list(
+// 		"Bouncer",
+// 		"Service Guard",
+// 		"Doorman",
+// 	)
+// SS1984 REMOVAL END
 
 /datum/job/corrections_officer
 	alt_titles = list(
@@ -110,6 +122,9 @@
 		"Captain",
 		"Commanding Officer",
 		"Site Manager",
+		"Site Overseer",
+		"Site Director",
+		"Site Administrator",
 		"Station Commander",
 	)
 
@@ -168,6 +183,7 @@
 		"Head of Medical",
 		"Head Physician",
 		"Medical Director",
+		"Medical Administrator",
 	)
 
 /datum/job/clown
@@ -206,11 +222,13 @@
 		"Librarian",
 	)
 
-/datum/job/customs_agent
-	alt_titles = list(
-		"Customs Agent",
-		"Supply Guard",
-	)
+// SS1984 REMOVAL START
+// /datum/job/customs_agent
+// 	alt_titles = list(
+// 		"Customs Agent",
+// 		"Supply Guard",
+// 	)
+// SS1984 REMOVAL END
 
 /datum/job/cyborg
 	alt_titles = list(
@@ -239,7 +257,7 @@
 		"Registered Nurse",
 	)
 
-/datum/job/engineering_guard //see orderly
+// SS1984 REMOVAL /datum/job/engineering_guard //see orderly
 
 /datum/job/geneticist
 	alt_titles = list(
@@ -262,6 +280,7 @@
 		"Chief Constable",
 		"Chief of Security",
 		"Security Commander",
+		"Security Director",
 		"Sheriff",
 	)
 
@@ -302,11 +321,13 @@
 		"Nanotrasen Diplomat",
 	)
 
-/datum/job/orderly
-	alt_titles = list(
-		"Orderly",
-		"Medical Guard",
-	) //other dept guards' alt-titles should be kept to [department] guard to avoid confusion, unless the department gets a re-do.
+// SS1984 REMOVAL START
+// /datum/job/orderly
+// 	alt_titles = list(
+// 		"Orderly",
+// 		"Medical Guard",
+// 	) //other dept guards' alt-titles should be kept to [department] guard to avoid confusion, unless the department gets a re-do.
+// SS1984 REMOVAL END
 
 /datum/job/paramedic
 	alt_titles = list(
@@ -354,6 +375,7 @@
 		"Lead Researcher",
 		"Research Supervisor",
 		"Silicon Administrator",
+		"Research Administrator",
 		"Director of Science",
 	)
 
@@ -367,7 +389,7 @@
 		"Apprentice Roboticist",
 	)
 
-/datum/job/science_guard //See orderly
+// SS1984 REMOVAL /datum/job/science_guard //See orderly
 
 /datum/job/scientist
 	alt_titles = list(

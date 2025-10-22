@@ -125,6 +125,10 @@
 /// log emotes
 /datum/config_entry/flag/log_emote
 
+/// log ghost polling
+/datum/config_entry/flag/log_ghost_poll
+	default = TRUE
+
 /// log economy actions
 /datum/config_entry/flag/log_econ
 
@@ -642,6 +646,13 @@
 
 /datum/config_entry/flag/picture_logging_camera
 
+/datum/config_entry/number/roundstart_logout_report_time_average
+	default = 10 MINUTES
+	min_val = 0
+
+/datum/config_entry/number/roundstart_logout_report_time_variance
+	default = 3 MINUTES
+	min_val = 0
 
 /datum/config_entry/flag/reopen_roundstart_suicide_roles
 
@@ -790,3 +801,7 @@
 
 /datum/config_entry/flag/generate_assets_in_init
 	default = FALSE
+
+/datum/config_entry/number/minimum_ascension_time
+	default = 0 // 1 minute
+	min_val = 0

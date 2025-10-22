@@ -54,7 +54,8 @@
 #define JOB_RESEARCH_DIRECTOR "Research Director"
 #define JOB_CHIEF_ENGINEER "Chief Engineer"
 #define JOB_CHIEF_MEDICAL_OFFICER "Chief Medical Officer"
-#define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
+#define JOB_BRIDGE_ASSISTANT "Bridge Officer" // NOVA EDIT CHANGE - ORIGINAL: #define JOB_BRIDGE_ASSISTANT "Bridge Assistant"
+#define JOB_BRIDGE_ASSISTANT_1984 "Bridge Assistant"
 #define JOB_VETERAN_ADVISOR "Veteran Security Advisor"
 //Silicon
 #define JOB_AI "AI"
@@ -65,28 +66,30 @@
 #define JOB_WARDEN "Warden"
 #define JOB_DETECTIVE "Detective"
 #define JOB_SECURITY_OFFICER "Security Officer"
-#define JOB_SECURITY_OFFICER_MEDICAL "Security Officer (Medical)"
-#define JOB_SECURITY_OFFICER_ENGINEERING "Security Officer (Engineering)"
-#define JOB_SECURITY_OFFICER_SCIENCE "Security Officer (Science)"
-#define JOB_SECURITY_OFFICER_SUPPLY "Security Officer (Cargo)"
+#define JOB_SECURITY_OFFICER_MEDICAL "Medical Security Officer"
+#define JOB_SECURITY_OFFICER_ENGINEERING "Engineering Security Officer"
+#define JOB_SECURITY_OFFICER_SCIENCE "Science Security Officer"
+#define JOB_SECURITY_OFFICER_SUPPLY "Cargo Security Officer"
+#define JOB_SECURITY_OFFICER_SERVICE "Service Security Officer" // SS1984 ADDITION
 #define JOB_CORRECTIONS_OFFICER "Corrections Officer" // NOVA EDIT ADDITION
+#define JOB_SECURITY_MEDIC "Security Medic" //SS1984 ADD
 //Engineering
 #define JOB_STATION_ENGINEER "Station Engineer"
 #define JOB_ATMOSPHERIC_TECHNICIAN "Atmospheric Technician"
 #define JOB_TELECOMMS_SPECIALIST "Telecomms Specialist" // NOVA EDIT ADDITION
-#define JOB_ENGINEERING_GUARD "Engineering Guard" // NOVA EDIT ADDITION
+// SS1984 REMOVAL #define JOB_ENGINEERING_GUARD "Engineering Guard" // NOVA EDIT ADDITION
 //Medical
 #define JOB_CORONER "Coroner"
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
 #define JOB_VIROLOGIST "Virologist" // NOVA EDIT ADDITION
-#define JOB_ORDERLY "Orderly" // NOVA EDIT ADDITION
+// SS1984 REMOVAL #define JOB_ORDERLY "Orderly" // NOVA EDIT ADDITION
 //Science
 #define JOB_SCIENTIST "Scientist"
 #define JOB_ROBOTICIST "Roboticist"
 #define JOB_GENETICIST "Geneticist"
-#define JOB_SCIENCE_GUARD "Science Guard" // NOVA EDIT ADDITION
+// SS1984 REMOVAL #define JOB_SCIENCE_GUARD "Science Guard" // NOVA EDIT ADDITION
 //Supply
 #define JOB_QUARTERMASTER "Quartermaster"
 #define JOB_CARGO_TECHNICIAN "Cargo Technician"
@@ -108,7 +111,7 @@
 #define JOB_PSYCHOLOGIST "Psychologist"
 #define JOB_PUN_PUN "Pun Pun"
 #define JOB_BARBER "Barber" // NOVA EDIT ADDITION
-#define JOB_BOUNCER "Service Guard" // NOVA EDIT ADDITION
+// SS1984 REMOVAL #define JOB_BOUNCER "Service Guard" // NOVA EDIT ADDITION
 //ERTs
 #define JOB_ERT_DEATHSQUAD "Death Commando"
 #define JOB_ERT_COMMANDER "Emergency Response Team Commander"
@@ -162,6 +165,8 @@
 	JOB_ATMOSPHERIC_TECHNICIAN, \
 )
 
+//Bots
+#define JOB_MEDIBOT "Medibot"
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
 #define JOB_DISPLAY_ORDER_CAPTAIN 2
@@ -208,11 +213,13 @@
 #define JOB_DISPLAY_ORDER_CORRECTIONS_OFFICER 403 //NOVA EDIT ADDITION
 #define JOB_DISPLAY_ORDER_NANOTRASEN_CONSULTANT 404 //NOVA EDIT ADDITION
 #define JOB_DISPLAY_ORDER_BLUESHIELD 405 //NOVA EDIT ADDITION
-#define JOB_DISPLAY_ORDER_ORDERLY 406 //NOVA EDIT ADDITION
-#define JOB_DISPLAY_ORDER_SCIENCE_GUARD 407 //NOVA EDIT ADDITION
-#define JOB_DISPLAY_ORDER_BOUNCER 408 //NOVA EDIT ADDITION
-#define JOB_DISPLAY_ORDER_ENGINEER_GUARD 409 //NOVA EDIT ADDITION
-#define JOB_DISPLAY_ORDER_CUSTOMS_AGENT 410 //NOVA EDIT ADDITION
+// SS1984 REMOVAL START
+// #define JOB_DISPLAY_ORDER_ORDERLY 406 //NOVA EDIT ADDITION
+// #define JOB_DISPLAY_ORDER_SCIENCE_GUARD 407 //NOVA EDIT ADDITION
+// #define JOB_DISPLAY_ORDER_BOUNCER 408 //NOVA EDIT ADDITION
+// #define JOB_DISPLAY_ORDER_ENGINEER_GUARD 409 //NOVA EDIT ADDITION
+// #define JOB_DISPLAY_ORDER_CUSTOMS_AGENT 410 //NOVA EDIT ADDITION
+// SS1984 REMOVAL END
 #define JOB_DISPLAY_ORDER_EXP_CORPS 411 //NOVA EDIT ADDITION
 #define JOB_DISPLAY_ORDER_TELECOMMS_SPECIALIST 412 //NOVA EDIT ADDITION
 
@@ -282,6 +289,10 @@ DEFINE_BITFIELD(departments_bitflags, list(
 #define JOB_LATEJOIN_ONLY (1<<11)
 /// This job is a head of staff.
 #define JOB_HEAD_OF_STAFF (1<<12)
+/// This job will NEVER be selected as an antag role
+#define JOB_ANTAG_BLACKLISTED (1<<13)
+/// This job will never be selected as an antag role IF config `protect_roles_from_antagonist` is set
+#define JOB_ANTAG_PROTECTED (1<<14)
 
 DEFINE_BITFIELD(job_flags, list(
 	"JOB_ANNOUNCE_ARRIVAL" = JOB_ANNOUNCE_ARRIVAL,
@@ -302,7 +313,7 @@ DEFINE_BITFIELD(job_flags, list(
 /// Combination flag for jobs which are considered regular crew members of the station.
 #define STATION_JOB_FLAGS (JOB_ANNOUNCE_ARRIVAL|JOB_CREW_MANIFEST|JOB_EQUIP_RANK|JOB_CREW_MEMBER|JOB_NEW_PLAYER_JOINABLE|JOB_REOPEN_ON_ROUNDSTART_LOSS|JOB_ASSIGN_QUIRKS|JOB_CAN_BE_INTERN)
 /// Combination flag for jobs which are considered heads of staff.
-#define HEAD_OF_STAFF_JOB_FLAGS (JOB_BOLD_SELECT_TEXT|JOB_CANNOT_OPEN_SLOTS|JOB_HEAD_OF_STAFF)
+#define HEAD_OF_STAFF_JOB_FLAGS (JOB_BOLD_SELECT_TEXT|JOB_CANNOT_OPEN_SLOTS|JOB_HEAD_OF_STAFF) // SS1984 EDIT: reverted Nova's protected heads from antags
 /// Combination flag for jobs which are enabled by station traits.
 #define STATION_TRAIT_JOB_FLAGS (JOB_CANNOT_OPEN_SLOTS|JOB_HIDE_WHEN_EMPTY|JOB_LATEJOIN_ONLY&~JOB_REOPEN_ON_ROUNDSTART_LOSS)
 
@@ -320,3 +331,5 @@ DEFINE_BITFIELD(job_flags, list(
 
 /// Mind traits that should be shared by every head of staff. has to be this way cause byond lists lol
 #define HEAD_OF_STAFF_MIND_TRAITS TRAIT_FAST_TYING, TRAIT_HIGH_VALUE_RANSOM
+#define MEDICAL_MIND_TRAITS TRAIT_DESENSITIZED
+#define SECURITY_MIND_TRAITS TRAIT_DESENSITIZED

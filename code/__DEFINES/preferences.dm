@@ -38,6 +38,11 @@
 
 #define TOGGLES_DEFAULT_CHAT (CHAT_OOC|CHAT_DEAD|CHAT_PRAYER|CHAT_PULLR|CHAT_GHOSTPDA|CHAT_GHOSTRADIO|CHAT_BANKCARD|CHAT_GHOSTLAWS|CHAT_LOGIN_LOGOUT)
 
+/// File path to where we save backups of preference savefiles when updating them.
+#define PREFS_BACKUP_PATH(base_path) "[base_path].updatebac"
+/// File path to the dev preference json file, which is loaded by guests while localhosting.
+#define DEV_PREFS_PATH "config/dev_preferences.json"
+
 #define PARALLAX_INSANE "Insane"
 #define PARALLAX_HIGH "High"
 #define PARALLAX_MED "Medium"
@@ -57,6 +62,7 @@
 #define SEC_DEPT_MEDICAL "Medical"
 #define SEC_DEPT_SCIENCE "Science"
 #define SEC_DEPT_SUPPLY "Supply"
+#define SEC_DEPT_SERVICE "Service" // SS1984 ADDITION
 
 // Playtime tracking system, see jobs_exp.dm
 #define EXP_TYPE_LIVING "Living"

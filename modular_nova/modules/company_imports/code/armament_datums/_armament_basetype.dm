@@ -6,3 +6,5 @@
 	var/company_bitflag
 	/// If this requires a multitooled console to be visible
 	var/contraband = FALSE
+	/// If this requires a emagged console to be visible, SS1984 ADD
+	var/high_contraband = FALSE

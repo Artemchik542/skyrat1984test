@@ -1,7 +1,4 @@
 // interdyne code
-#define SECHUD_SYNDICATE_INTERDYNE_GREEN "hudinterdynegreen"
-#define SECHUD_SYNDICATE_INTERDYNE_GREEN_MINER "hudinterdynegreenminer"
-#define SECHUD_SYNDICATE_INTERDYNE_GREEN_HEAD "hudinterdynegreenhead"
 #define ACCESS_SYNDICATE_IP "syndicate_interdyne"
 // ds 2 code
 #define ACCESS_SYNDICATE_DS "syndicate_deepspace"

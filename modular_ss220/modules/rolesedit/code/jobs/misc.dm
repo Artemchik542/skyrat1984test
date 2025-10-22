@@ -75,5 +75,5 @@
 /obj/item/radio/headset/silicon/ai/faction
 	keyslot2 = /obj/item/encryptionkey/debug
 
-/obj/machinery/computer/cryopod
-	radio = /obj/item/radio/headset/silicon/ai/faction
+// /obj/machinery/computer/cryopod
+// 	radio = /obj/item/radio/headset/silicon/ai/faction

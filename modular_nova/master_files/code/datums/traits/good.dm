@@ -68,16 +68,6 @@
 		right_arm.unarmed_miss_sound = initial(right_arm.unarmed_miss_sound)
 		right_arm.unarmed_sharpness = initial(right_arm.unarmed_sharpness)
 
-/datum/quirk/water_breathing
-	name = "Water breathing"
-	desc = "You are able to breathe underwater!"
-	value = 2
-	mob_trait = TRAIT_WATER_BREATHING
-	gain_text = span_notice("You become acutely aware of the moisture in your lungs and in the air. It feels nice.")
-	lose_text = span_danger("You suddenly realize the moisture in your lungs feels <i>really weird</i>, and you almost choke on it!")
-	medical_record_text = "Patient possesses biology compatible with aquatic respiration."
-	icon = FA_ICON_FISH
-
 // AdditionalEmotes *turf quirks
 /datum/quirk/water_aspect
 	name = "Water aspect (Emotes)"
@@ -173,6 +163,7 @@
 	desc = "You can hear even the quietest of sounds, but you're more vulnerable to hearing damage as a result. NOTE: This is a direct downgrade for Teshari!"
 	icon = FA_ICON_HEADPHONES_SIMPLE
 	value = 6
+	hidden_quirk = TRUE // disabled until reworked.
 	mob_trait = TRAIT_SENSITIVE_HEARING
 	gain_text = span_notice("You could hear a pin drop from 10 feet away.")
 	lose_text = span_danger("Your hearing feels less sensitive.")

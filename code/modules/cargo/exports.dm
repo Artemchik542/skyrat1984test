@@ -46,9 +46,12 @@ Then the player gets the profit from selling his own wasted time.
 	** dry_run: if the item should be actually sold, or if it's just a pirce test
 	** external_report: works as "transaction" object, pass same one in if you're doing more than one export in single go
 	** ignore_typecache: typecache containing types that should be completely ignored
-	** export_market: Defines the market that the items are being sold to.
+	** export_markets: Defines the market that the items are being sold to.
 */
-/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache, export_market = EXPORT_MARKET_STATION)
+/proc/export_item_and_contents(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, list/ignore_typecache, export_markets = list(EXPORT_MARKET_STATION))
+	if(!islist(export_markets))
+		export_markets = list(export_markets)
+
 	external_report = init_export(external_report)
 
 	var/list/contents = exported_atom.get_all_contents_ignoring(ignore_typecache)
@@ -56,7 +59,7 @@ Then the player gets the profit from selling his own wasted time.
 	// We go backwards, so it'll be innermost objects sold first. We also make sure nothing is accidentally delete before everything is sold.
 	var/list/to_delete = list()
 	for(var/atom/movable/thing as anything in reverse_range(contents))
-		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_market)
+		var/sold = _export_loop(thing, apply_elastic, dry_run, external_report, export_markets)
 		if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 			if(ismob(thing))
 				thing.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -69,10 +72,10 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// It works like export_item_and_contents(), however it ignores the contents. Meaning only `exported_atom` will be valued.
-/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market = EXPORT_MARKET_STATION)
+/proc/export_single_item(atom/movable/exported_atom, apply_elastic = TRUE, delete_unsold = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets = list(EXPORT_MARKET_STATION))
 	external_report = init_export(external_report)
 
-	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_market)
+	var/sold = _export_loop(exported_atom, apply_elastic, dry_run, external_report, export_markets)
 	if(!dry_run && (sold || delete_unsold) && sold != EXPORT_SOLD_DONT_DELETE)
 		if(ismob(exported_atom))
 			exported_atom.investigate_log("deleted through cargo export", INVESTIGATE_CARGO)
@@ -81,17 +84,17 @@ Then the player gets the profit from selling his own wasted time.
 	return external_report
 
 /// The main bit responsible for selling the item. Shared by export_single_item() and export_item_and_contents()
-/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_market)
+/proc/_export_loop(atom/movable/exported_atom, apply_elastic = TRUE, dry_run = FALSE, datum/export_report/external_report, export_markets)
 	var/sold = EXPORT_NOT_SOLD
 	for(var/datum/export/export as anything in GLOB.exports_list)
-		if(export.applies_to(exported_atom, apply_elastic, export_market))
+		if(export.applies_to(exported_atom, apply_elastic, export_markets))
 			if(!dry_run && (SEND_SIGNAL(exported_atom, COMSIG_ITEM_PRE_EXPORT) & COMPONENT_STOP_EXPORT))
 				break
 			//Don't add value of unscannable items for a dry run report
 			if(dry_run && !export.scannable)
 				external_report.all_contents_scannable = FALSE
 				break
-			sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic)
+			sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic, export_markets) // SS1984 EDIT, orgininal: sold = export.sell_object(exported_atom, external_report, dry_run, apply_elastic)
 			external_report.exported_atoms += " [exported_atom.name]"
 			break
 	return sold
@@ -163,18 +166,19 @@ Then the player gets the profit from selling his own wasted time.
 	return 1
 
 /// Checks if the item is fit for export datum.
-/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_market)
-	if(!is_type_in_typecache(exported_item, export_types))
-		return FALSE
-	if(include_subtypes && is_type_in_typecache(exported_item, exclude_types))
-		return FALSE
-	if(!get_cost(exported_item, apply_elastic))
-		return FALSE
-	if(export_market != sales_market)
-		return FALSE
-	if(exported_item.flags_1 & HOLOGRAM_1)
-		return FALSE
-	return TRUE
+/datum/export/proc/applies_to(obj/exported_item, apply_elastic = TRUE, export_markets)
+	for(var/found_market in export_markets)
+		if(!is_type_in_typecache(exported_item, export_types))
+			continue
+		if(include_subtypes && is_type_in_typecache(exported_item, exclude_types))
+			continue
+		if(!get_cost(exported_item, apply_elastic))
+			continue
+		if(!is_compatible_market(found_market)) // SS1984 EDIT, original: if(found_market != sales_market)
+			continue
+		if(exported_item.flags_1 & HOLOGRAM_1)
+			continue
+		return TRUE
 
 /**
  * Calculates the exact export value of the object, while factoring in all the relivant variables.
@@ -184,9 +188,26 @@ Then the player gets the profit from selling his own wasted time.
  * get_cost, get_amount and applies_to do not neccesary mean a successful sale.
  *
  */
-/datum/export/proc/sell_object(obj/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
+/datum/export/proc/sell_object(obj/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE, export_markets) // SS1984 EDIT, original: /datum/export/proc/sell_object(obj/sold_item, datum/export_report/report, dry_run = TRUE, apply_elastic = TRUE)
 	///This is the value of the object, as derived from export datums.
-	var/export_value = get_cost(sold_item, apply_elastic)
+	// SS1984 REMOVAL START
+	// var/export_value = get_cost(sold_item, apply_elastic)
+	// SS1984 REMOVAL END
+	// SS1984 ADDITION START
+	var/target_market
+	if (!isnull(export_markets))
+		if (islist(export_markets))
+			for(var/found_market in export_markets)
+				if(!is_compatible_market(found_market))
+					continue
+				target_market = found_market
+				break // use first found, it's not really was intended to use multiple markets
+		else
+			target_market = "[export_markets]"
+	var/export_value = get_cost_ready_to_sell(sold_item, apply_elastic, target_market ? target_market : sales_market)
+	if (export_value < 0)
+		export_value = get_cost(sold_item, apply_elastic)
+	// SS1984 ADDITION END
 	///Quantity of the object in question.
 	var/export_amount = get_amount(sold_item)
 

@@ -108,8 +108,14 @@
 
 	return ..()
 
-///Speak as a dead person (ghost etc)
-/mob/proc/say_dead(message)
+/**
+ * say_dead
+ * allows you to speak as a dead person
+ * Args:
+ * - message: The message you're sending to chat.
+ * - mannequin_controller: If someone else is forcing you to speak, this is the mob doing it.
+ */
+/mob/proc/say_dead(message, mob/mannequin_controller)
 	var/name = real_name
 	var/alt_name = ""
 
@@ -117,13 +123,12 @@
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
 		return
 
-	//NOVA EDIT ADDITION
+	//NOVA EDIT ADDITION START
 	if(!GLOB.dchat_allowed && !check_rights(R_ADMIN, FALSE))
 		to_chat(src, "<span class='danger'>Dead chat is currently muted.</span>")
 		return
-	//NOVA EDIT END
-
-	var/jb = is_banned_from(ckey, "Deadchat")
+	//NOVA EDIT ADDITION END
+	var/jb = is_banned_from(mannequin_controller?.ckey || ckey, "Deadchat")
 	if(QDELETED(src))
 		return
 
@@ -156,7 +161,7 @@
 		if(name != real_name)
 			alt_name = " (died as [real_name])"
 
-	var/spanned = say_quote(apply_message_emphasis(message))
+	var/spanned = generate_messagepart(message)
 	var/source = "<span class='game'><span class='prefix'>DEAD:</span> <span class='name'>[name]</span>[alt_name]"
 	var/rendered = " <span class='message'>[emoji_parse(spanned)]</span></span>"
 	log_talk(message, LOG_SAY, tag="DEAD")
@@ -218,7 +223,7 @@
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
 		else if(key == ";" && !mods[MODE_HEADSET])
-			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+			if(stat < HARD_CRIT) // SS1984 EDIT, original: if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])

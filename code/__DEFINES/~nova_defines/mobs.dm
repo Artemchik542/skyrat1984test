@@ -2,7 +2,7 @@
 
 #define PULL_OVERSIZED_SLOWDOWN 2
 
-#define HUMAN_HEALTH_MODIFIER 1.35
+#define HUMAN_HEALTH_MODIFIER 1.0 // SS1984 EDIT, original: 1.35
 
 #define HUMAN_MAXHEALTH MAX_LIVING_HEALTH * HUMAN_HEALTH_MODIFIER
 
@@ -34,3 +34,9 @@
 #define BODYPART_ICON_IPC 'modular_nova/modules/bodyparts/icons/ipc_parts.dmi'
 #define BODYPART_ICON_SYNTHLIZARD 'modular_nova/modules/bodyparts/icons/synthliz_parts_greyscale.dmi'
 #define BODYPART_ICON_SNAIL 'modular_nova/modules/bodyparts/icons/snail_parts_greyscale.dmi'
+#define BODYPART_ICON_RAMATAE 'modular_nova/modules/bodyparts/icons/ramatae_parts_greyscale.dmi'
+#define BODYPART_ICON_INSECTOID 'modular_nova/modules/bodyparts/icons/insectoid_parts_greyscale.dmi'
+///Defines for special modular bodypart variants, like harpy legs.
+#define BODYPART_ICON_HARPY 'modular_nova/modules/bodyparts/icons/bespoke/harpy_parts_greyscale.dmi'
+#define BODYPART_ICON_HARPY_HUMAN 'modular_nova/modules/bodyparts/icons/bespoke/harpy_parts_skintone.dmi'
+#define BODYPART_ICON_HUMAN_CRITTER 'modular_nova/modules/bodyparts/icons/bespoke/mutant_parts_skintone.dmi'

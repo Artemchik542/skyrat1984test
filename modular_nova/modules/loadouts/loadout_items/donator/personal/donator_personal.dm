@@ -119,7 +119,7 @@
 	name = "XuraCorp Biohazard Underfitting"
 	item_path = /obj/item/clothing/under/plasmaman/jax2
 	ckeywhitelist = list("candlejax")
-	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_SCIENCE_GUARD, JOB_VIROLOGIST, JOB_GENETICIST)
+	restricted_roles = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_VIROLOGIST, JOB_GENETICIST) // SS1984 REMOVAL JOB_SCIENCE_GUARD
 
 /datum/loadout_item/mask/cmcp_mask
 	name = "CMCP Mask"
@@ -228,11 +228,11 @@
 		JOB_QUARTERMASTER,
 		JOB_CAPTAIN,
 		JOB_BRIDGE_ASSISTANT,
-		JOB_ORDERLY,
-		JOB_ENGINEERING_GUARD,
-		JOB_CUSTOMS_AGENT,
-		JOB_SCIENCE_GUARD,
-		JOB_BOUNCER,
+		JOB_SECURITY_OFFICER_MEDICAL, // SS1984 EDIT, original: JOB_ORDERLY
+		JOB_SECURITY_OFFICER_ENGINEERING, // SS1984 EDIT, original: JOB_ENGINEERING_GUARD
+		JOB_SECURITY_OFFICER_SUPPLY, // SS1984 EDIT, original: JOB_CUSTOMS_AGENT
+		JOB_SECURITY_OFFICER_SCIENCE, // SS1984 EDIT, original: JOB_SCIENCE_GUARD
+		JOB_SECURITY_OFFICER_SERVICE, // SS1984 EDIT, original: JOB_BOUNCER
 	)
 
 /datum/loadout_item/suit/brasspriest
@@ -319,7 +319,7 @@
 
 /datum/loadout_item/pocket_items/darksabresheath
 	name = "Dark Sabre Sheath"
-	item_path = /obj/item/storage/belt/sabre/darksabre
+	item_path = /obj/item/storage/belt/sheath/sabre/darksabre
 	ckeywhitelist = list("inferno707")
 
 /datum/loadout_item/pocket_items/darkarmor
@@ -830,7 +830,7 @@
 
 /datum/loadout_item/inhand/pet/mrfluff_mothroach
 	name = "Mr. Fluff"
-	item_path = /obj/item/clothing/head/mob_holder/pet/donator/centralsmith
+	item_path = /obj/item/mob_holder/pet/donator/centralsmith
 	ckeywhitelist = list("centralsmith")
 
 /datum/loadout_item/under/jumpsuit/techpants
@@ -963,6 +963,11 @@
 	item_path = /obj/item/clothing/gloves/ecologist
 	ckeywhitelist = list("deadmonwonderland", "pyritechimera", "darkinite", "wivernshy")
 
+/datum/loadout_item/suit/admiral_coat
+	name = "Admiral's Coat"
+	item_path = /obj/item/clothing/suit/admiral_coat
+	ckeywhitelist = list("pyritechimera", "sirbillyblacksmith", "darkinite")
+
 /datum/loadout_item/suit/merctac
 	name = "MercTac Hoodie"
 	item_path = /obj/item/clothing/suit/hooded/merctac_hoodie
@@ -998,3 +1003,7 @@
 	item_path = /obj/item/clothing/under/rank/civilian/curator/treasure_hunter/noble_enforcer
 	ckeywhitelist = list("courierasy")
 
+/datum/loadout_item/toys/ak105_kit
+	name = "AK-105 SBR Conversion Kit"
+	item_path = /obj/item/device/custom_kit/ak105
+	ckeywhitelist = list("latinfishy", "hollandaisesauce", "orbisa")

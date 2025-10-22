@@ -8,15 +8,21 @@
 	return ""
 
 /mob/living/silicon/compose_job(atom/movable/speaker, raw_message, radio_freq, namepart, obj/machinery/announcement_system/announcer, job, job_custom_name, speaker_source) //SS1984 EDIT
-	//Also includes the </a> for AI hrefs, for convenience.
+	// SS1984 REMOVAL START
+	// //Also includes the </a> for AI hrefs, for convenience.
+	// if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
+	// 	return ""
+	// return "[radio_freq ? " (" + speaker.GetJob() + ")" : ""]" + "[speaker.GetSource() ? "</a>" : ""]"
+	// SS1984 REMOVAL END
+	// SS1984 ADDITION START
+	var/retrieved_msg = ..()
 	if(!HAS_TRAIT(src, TRAIT_CAN_GET_AI_TRACKING_MESSAGE))
-	//SS1984 EDIT START
-		return "[namepart]" + "</a>"
-	var/retrieved_msg = ..(speaker, raw_message, radio_freq, namepart, announcer, job, job_custom_name, speaker_source)
+		return retrieved_msg
+
 	if (retrieved_msg == "[namepart]")
 		retrieved_msg += " ([speaker.GetJob()])" // smart enough to get job bypassing disabled settings at telecomms
 	return retrieved_msg + "</a>"
-	//SS1984 EDIT END
+	//SS1984 ADDITION END
 
 /mob/living/silicon/ai/try_speak(message, ignore_spam = FALSE, forced = null, filterproof = FALSE)
 	// AIs cannot speak if silent AI is on.
@@ -40,32 +46,31 @@
 		if(radio)
 			radio.talk_into(src, message, , spans, language, message_mods)
 		return NOPASS
-	else if(message_mods[RADIO_EXTENSION] in GLOB.radiochannels)
+	else if(message_mods[RADIO_EXTENSION] in GLOB.default_radio_channels)
 		if(radio)
 			radio.talk_into(src, message, message_mods[RADIO_EXTENSION], spans, language, message_mods)
 			return NOPASS
 	return FALSE
 
 //For holopads only. Usable by AI.
-/mob/living/silicon/ai/proc/holopad_talk(message, language)
+/mob/living/silicon/ai/proc/holopad_talk(message, list/spans = list(), language, list/message_mods = list())
 	message = trim(message)
 
 	if (!message)
 		return
 
 	var/obj/machinery/holopad/active_pad = current
-	if(istype(active_pad) && active_pad.masters[src])//If there is a hologram and its master is the user.
-		var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
-		var/turf/padturf = get_turf(active_pad)
-		var/padloc
-		if(padturf)
-			padloc = AREACOORD(padturf)
-		else
-			padloc = "(UNKNOWN)"
-		src.log_talk(message, LOG_SAY, tag="HOLOPAD in [padloc]")
-		ai_holo.say(message, sanitize = FALSE, language = language)
-	else
+	// Only continue if there is a hologram and its master is the user.
+	if(!istype(active_pad) || !active_pad.masters[src])
 		to_chat(src, span_alert("No holopad connected."))
+		return
+
+	var/obj/effect/overlay/holo_pad_hologram/ai_holo = active_pad.masters[src]
+	var/turf/pad_turf = get_turf(active_pad)
+	var/pad_loc = pad_turf ? AREACOORD(pad_turf) : "(UNKNOWN)"
+
+	log_sayverb_talk(message, message_mods, tag = "HOLOPAD in [pad_loc]")
+	ai_holo.say(message, spans = spans, sanitize = FALSE, language = language, message_mods = message_mods)
 
 // Make sure that the code compiles with AI_VOX undefined
 #ifdef AI_VOX

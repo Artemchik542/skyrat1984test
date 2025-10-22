@@ -2,7 +2,7 @@
 GLOBAL_LIST_INIT(nttc_jobs, list(
 	//No department
 	JOB_ASSISTANT = "radio",
-	JOB_PRISONER = "radio",
+	JOB_PRISONER = "monkey",
 	//Command
 	JOB_CAPTAIN = "comradio",
 	JOB_HEAD_OF_PERSONNEL = "comradio",
@@ -11,6 +11,7 @@ GLOBAL_LIST_INIT(nttc_jobs, list(
 	JOB_CHIEF_ENGINEER = "engradio",
 	JOB_CHIEF_MEDICAL_OFFICER = "medradio",
 	JOB_BRIDGE_ASSISTANT = "comradio",
+	JOB_BRIDGE_ASSISTANT_1984 = "comradio",
 	JOB_VETERAN_ADVISOR = "comradio",
 	//Silicon
 	JOB_AI = "aiprivradio",
@@ -25,31 +26,33 @@ GLOBAL_LIST_INIT(nttc_jobs, list(
 	JOB_SECURITY_OFFICER_ENGINEERING = "secradio",
 	JOB_SECURITY_OFFICER_SCIENCE = "secradio",
 	JOB_SECURITY_OFFICER_SUPPLY = "secradio",
+	JOB_SECURITY_OFFICER_SERVICE = "secradio", // SS1984 ADDITION
 	JOB_CORRECTIONS_OFFICER = "secradio", // NOVA EDIT ADDITION
+	JOB_SECURITY_MEDIC = "secradio", // SS1984 ADD
 	//Engineering
 	JOB_STATION_ENGINEER = "engradio",
 	JOB_ATMOSPHERIC_TECHNICIAN = "engradio",
 	JOB_TELECOMMS_SPECIALIST = "engradio", // NOVA EDIT ADDITION
-	JOB_ENGINEERING_GUARD = "secradio", // NOVA EDIT ADDITION
+	// SS1984 REMOVAL JOB_ENGINEERING_GUARD = "secradio", // NOVA EDIT ADDITION
 	//Medical
 	JOB_CORONER = "medradio",
 	JOB_MEDICAL_DOCTOR = "medradio",
 	JOB_PARAMEDIC = "medradio",
 	JOB_CHEMIST = "medradio",
 	JOB_VIROLOGIST = "medradio", // NOVA EDIT ADDITION
-	JOB_ORDERLY = "medradio", // NOVA EDIT ADDITION
+	// SS1984 REMOVAL JOB_ORDERLY = "medradio", // NOVA EDIT ADDITION
 	//Science
 	JOB_SCIENTIST = "sciradio",
 	JOB_ROBOTICIST = "sciradio",
 	JOB_GENETICIST = "sciradio",
-	JOB_SCIENCE_GUARD = "secradio", // NOVA EDIT ADDITION
+	// SS1984 REMOVAL JOB_SCIENCE_GUARD = "secradio", // NOVA EDIT ADDITION
 	//Supply
 	JOB_QUARTERMASTER = "suppradio",
 	JOB_CARGO_TECHNICIAN = "suppradio",
 	JOB_CARGO_GORILLA = "suppradio",
 	JOB_SHAFT_MINER = "suppradio",
 	JOB_BITRUNNER = "suppradio",
-	JOB_CUSTOMS_AGENT = "suppradio", // NOVA EDIT ADDITION
+	// SS1984 REMOVAL JOB_CUSTOMS_AGENT = "suppradio", // NOVA EDIT ADDITION
 	//Service
 	JOB_BARTENDER = "servradio",
 	JOB_BOTANIST = "servradio",
@@ -64,7 +67,7 @@ GLOBAL_LIST_INIT(nttc_jobs, list(
 	JOB_PSYCHOLOGIST = "servradio",
 	JOB_PUN_PUN = "servradio",
 	JOB_BARBER = "servradio", // NOVA EDIT ADDITION
-	JOB_BOUNCER = "secradio", // NOVA EDIT ADDITION
+	// SS1984 REMOVAL JOB_BOUNCER = "secradio", // NOVA EDIT ADDITION
 	//ERTs
 	JOB_ERT_DEATHSQUAD = "centcomradio",
 	JOB_ERT_COMMANDER = "centcomradio",

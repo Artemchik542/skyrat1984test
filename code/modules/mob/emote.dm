@@ -12,7 +12,7 @@
 #define BEYBLADE_CONFUSION_LIMIT (40 SECONDS)
 
 //The code execution of the emote datum is located at code/datums/emotes.dm
-/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE)
+/mob/proc/emote(act, m_type = null, message = null, intentional = FALSE, force_silence = FALSE, forced = FALSE)
 	var/param = message
 	var/custom_param = findchar(act, " ")
 	if(custom_param)
@@ -31,7 +31,7 @@
 		if(!emote.check_cooldown(src, intentional))
 			silenced = TRUE
 			continue
-		if(!emote.can_run_emote(src, TRUE, intentional, param))
+		if(!forced && !emote.can_run_emote(src, TRUE, intentional, param))
 			src.nextsoundemote = world.time // NOVA EDIT ADDITION - Since the cooldown is global and not specific to each emote, we need to reset it on an unsuccessful emote
 			continue
 		if(SEND_SIGNAL(src, COMSIG_MOB_PRE_EMOTED, emote.key, param, m_type, intentional, emote) & COMPONENT_CANT_EMOTE)
@@ -85,10 +85,12 @@
 
 /datum/emote/flip/run_emote(mob/user, params , type_override, intentional)
 	. = ..()
-	// NOVA EDIT ADDITION START - flips for everyone, but freerunners do it faster
-	if(intentional && !HAS_TRAIT(user, TRAIT_FREERUNNING) && !HAS_TRAIT(user, TRAIT_STYLISH) && !do_after(user, 0.5 SECONDS, target = user, hidden = TRUE))
-		return
-	// NOVA EDIT ADDITION END
+	// SS1984 REMOVAL START - no flip delay ALWAYS
+	// // NOVA EDIT ADDITION START - flips for everyone, but freerunners do it faster
+	// if(intentional && !HAS_TRAIT(user, TRAIT_FREERUNNING) && !HAS_TRAIT(user, TRAIT_STYLISH) && !do_after(user, 0.5 SECONDS, target = user, hidden = TRUE))
+	// 	return
+	// // NOVA EDIT ADDITION END
+	// SS1984 REMOVAL END
 	user.SpinAnimation(FLIP_EMOTE_DURATION, 1)
 
 /datum/emote/flip/check_cooldown(mob/user, intentional)

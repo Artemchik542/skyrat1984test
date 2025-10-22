@@ -479,7 +479,7 @@
 
 /datum/loadout_item/head/maidhead2
 	name = "Maid Headband - Frilly"
-	item_path = /obj/item/clothing/head/costume/maidheadband
+	item_path = /obj/item/clothing/head/costume/maid_headband
 	group = "Costumes"
 
 /datum/loadout_item/head/maidhead2/get_item_information()
@@ -756,6 +756,17 @@
 	item_path = /obj/item/clothing/head/fedora/det_hat
 	restricted_roles = list(JOB_DETECTIVE)
 	group = "Job-Locked"
+
+/*
+*	erp_item
+*/
+
+// SS1984 REMOVAL START
+// /datum/loadout_item/head/domina_cap
+// 	name = "Dominant Cap"
+// 	item_path = /obj/item/clothing/head/domina_cap
+// 	erp_item = TRUE
+// SS1984 REMOVAL END
 
 /*
 *	DONATOR

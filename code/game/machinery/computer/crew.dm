@@ -80,9 +80,11 @@
 /obj/machinery/computer/crew/syndie
 	icon_keyboard = "syndie_key"
 
-/obj/machinery/computer/crew/ui_interact(mob/user)
-	. = ..()
-	GLOB.crewmonitor.show(user,src)
+// SS1984 REMOVAL START
+// /obj/machinery/computer/crew/ui_interact(mob/user)
+// 	. = ..()
+// 	GLOB.crewmonitor.show(user,src)
+// SS1984 REMOVAL END
 
 GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
@@ -103,14 +105,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_HEAD_OF_SECURITY = 10,
 		JOB_WARDEN = 11,
 		JOB_SECURITY_OFFICER = 12,
-		/* NOVA EDIT REMOVAL - We need those slots for our own jobs, these jobs aren't on Nova anymore anyway.
+		// SS1984 RETURN OF DEPARTMENT SEC OFFICERS (revert the nova's removals and reordering)
 		JOB_SECURITY_OFFICER_MEDICAL = 13,
 		JOB_SECURITY_OFFICER_ENGINEERING = 14,
 		JOB_SECURITY_OFFICER_SCIENCE = 15,
 		JOB_SECURITY_OFFICER_SUPPLY = 16,
-		*/
-		JOB_CORRECTIONS_OFFICER = 13, // NOVA EDIT ADDITION
-		JOB_DETECTIVE = 14,
+		JOB_SECURITY_OFFICER_SERVICE = 17,
+		JOB_DETECTIVE = 18,
+		JOB_CORRECTIONS_OFFICER = 19, // NOVA EDIT ADDITION
 		// 20-29: Medbay
 		JOB_CHIEF_MEDICAL_OFFICER = 20,
 		JOB_CHEMIST = 21,
@@ -118,26 +120,27 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_PARAMEDIC = 23,
 		JOB_CORONER = 24,
 		JOB_VIROLOGIST = 25, // NOVA EDIT ADDITION: Returns Virologist
-		JOB_ORDERLY = 26, // NOVA EDIT ADDITION
-		JOB_PSYCHOLOGIST = 27, // NOVA EDIT - ORIGINAL: JOB_PSYCHOLOGIST = 71,
+		// SS1984 REMOVAL JOB_ORDERLY = 26, // NOVA EDIT ADDITION
+		JOB_PSYCHOLOGIST = 26, // SS1984 EDIT, NOVA's version: JOB_PSYCHOLOGIST = 27, TG ORIGINAL: JOB_PSYCHOLOGIST = 71,
+		JOB_SECURITY_MEDIC = 28, //SS1984 ADD security medic
 		// 30-39: Science
 		JOB_RESEARCH_DIRECTOR = 30,
 		JOB_SCIENTIST = 31,
 		JOB_ROBOTICIST = 32,
 		JOB_GENETICIST = 33,
-		JOB_SCIENCE_GUARD = 34, // NOVA EDIT ADDITION
+		// SS1984 REMOVAL JOB_SCIENCE_GUARD = 34, // NOVA EDIT ADDITION
 		// 40-49: Engineering
 		JOB_CHIEF_ENGINEER = 40,
 		JOB_STATION_ENGINEER = 41,
 		JOB_ATMOSPHERIC_TECHNICIAN = 42,
-		JOB_ENGINEERING_GUARD = 43, // NOVA EDIT ADDITION
-		JOB_TELECOMMS_SPECIALIST = 44, // NOVA EDIT ADDITION
+		// SS1984 REMOVAL  JOB_ENGINEERING_GUARD = 43, // NOVA EDIT ADDITION
+		JOB_TELECOMMS_SPECIALIST = 43, // SS1984 EDIT, original: JOB_TELECOMMS_SPECIALIST = 44, NOVA EDIT ADDITION
 		// 50-59: Cargo
 		JOB_QUARTERMASTER = 50,
 		JOB_SHAFT_MINER = 51,
 		JOB_CARGO_TECHNICIAN = 52,
 		JOB_BITRUNNER = 53,
-		JOB_CUSTOMS_AGENT = 54, // NOVA EDIT ADDITION
+		// SS1984 REMOVAL JOB_CUSTOMS_AGENT = 54, // NOVA EDIT ADDITION
 		// 60+: Service
 		JOB_HEAD_OF_PERSONNEL = 60,
 		JOB_BARTENDER = 61,
@@ -151,7 +154,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		JOB_JANITOR = 69,
 		JOB_LAWYER = 70,
 		JOB_BARBER = 71, // NOVA EDIT ADDITION
-		JOB_BOUNCER = 72, // NOVA EDIT ADDITION
+		// SS1984 REMOVAL JOB_BOUNCER = 72, // NOVA EDIT ADDITION
 		// 200-239: Centcom
 		JOB_CENTCOM_ADMIRAL = 200,
 		JOB_CENTCOM = 201,
@@ -180,7 +183,7 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 /datum/crewmonitor/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
-		ui = new(user, src, "CrewConsoleNova") // NOVA EDIT CHANGE - ORIGINAL: ui = new(user, src, "CrewConsole")
+		ui = new(user, src, "CrewConsole1984") // SS1984 EDIT, ORIGINAL: ui = new(user, src, "CrewConsole")
 		ui.open()
 
 /datum/crewmonitor/proc/show(mob/M, source)
@@ -275,7 +278,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			entry["burndam"] = rand(0,175)
 			entry["brutedam"] = rand(0,175)
 			entry["health"] = -50
-			entry["can_track"] = tracked_living_mob.can_track()
 			results[++results.len] = entry
 			continue
 
@@ -295,10 +297,15 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// Location
 		if (sensor_mode >= SENSOR_COORDS)
-			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
-
-		// Trackability
-		entry["can_track"] = tracked_living_mob.can_track()
+			// SS1984 REMOVAL entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
+			// SS1984 ADDITION START
+			entry["position"] = list(
+				"area" = capitalize(get_area_name(tracked_living_mob, format_text = TRUE)),
+				"x" = tracked_living_mob.x,
+				"y" = tracked_living_mob.y,
+				"z" = tracked_living_mob.z,
+			)
+			// SS1984 ADDITION END
 
 		results[++results.len] = entry
 
